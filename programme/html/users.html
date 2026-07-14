@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USER - публичная база данных</title>
+    <style>
+        body{background-color: black; display: flex; flex-direction: column; align-items: center; justify-content: center; gap:0.5cm;}
+        .column{display: flex; flex-direction: column; align-items: center; justify-content: center;}
+        .row{display: flex; flex-direction: row; align-items: center; justify-content: center;}
+        h1.header{font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; color: blue;}
+        div.header{background-color: aliceblue; border: solid 2px gray; border-radius: 1cm; padding: 1cm;}
+        div.btn-container{row-gap: 10px;}
+        div.container{background-color: white; border: solid 2px gray; border-radius: 1cm; padding: 1cm;}
+        button.btn-header{background-color: rgb(0, 89, 255); color: white; border: none; border-radius: 10px; padding: 10px 30px;}
+        button.btn-header:hover{box-shadow: 0 0 0 2px rgb(42, 116, 255), 0 0 0 6px rgb(0, 0, 255, 0.8)}
+        :disabled{cursor: no-drop; }
+        a[href]{text-decoration: none; color: black;}
+        a[href]:hover{text-decoration: underline; color: blue;}
+        hr{color: blue; width: 5cm;}
+        dialog::backdrop{background-color: rgba(0, 0, 0, 0.918);}
+    </style>
+</head>
+<body>
+    <div class="header column">
+        <h1 class="header">База данных USER</h1>
+        <div class="btn-container">
+            <a href="/mvd"><button class="btn-header">Вернуться на сайт МВД</button></a>
+            <a href="#check"><button class="btn-header">Проверить / Узнать</button></a>
+            <a href="#new"><button class="btn-header">Новый пользавотель</button></a>
+            <a href="#re"><button class="btn-header" disabled>Изменить данные</button></a>
+            <a href="#bfn"><button class="btn-header">Справка</button></a>
+            <button class="btn-header" onclick="DA()">для админестратора</button>
+        </div>
+    </div>
+    <div class="container column">
+        <h2><a name="bfn">Справка</a></h2>
+        <hr/>
+        <h3>Как использовать:</h3>
+        <details>
+            <summary>Читать ......</summary>
+            Данный сайт потребен для работы с базой данных USER.<br/>
+        </details>
+    </div>
+    <div class="container column">
+        <h2><a name="check">Проверить / Узнать</a></h2>
+        <hr/>
+        <blockquote>
+            <ul>
+                <li><a href="#checkVIZA">Проверить доступность выезда [<span style="color: blue;">VIZA</span>]</a></li>
+                <li><a href="#checkCar">Проверить возможность водить автомобиль</a></li>
+            </ul>
+        </blockquote>
+        <hr/>
+        <h3><a name="checkCar">Проверить активность прав на автомобиль</a></h3>
+        <div class="form">
+            <form action="/getCarStatus" method="post">
+                <label for="passportId">ID паспорта (код)</label>
+                <input type="text" name="passportId" placeholder="ID паспорта">
+                <br/>
+                <button type="reset">Отчистить</button>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <div class="column container">
+        <h2><a name="new">Новый пользавотель</a></h2>
+        <div class="form">
+            <form action="/newUser" method="post">
+                <label for="name">Имя</label>
+                <input type="text" name="name" placeholder="имя"><br/>
+                <label for="surname">Фамилия</label>
+                <input type="text" name="surname" placeholder="фамилия"><br/>
+                <label for="dob">дата рождения</label>
+                <input type="date" name="dob"><br/>
+                <label for="email">email / gmail</label>
+                <input type="email" name="email" placeholder="email"><br/>
+                <label for="addrass">адрес</label>
+                <input type="text" name="addrass" placeholder="адрес"><br/>
+                <label for="pid">ID паспорта (код)</label>
+                <input type="text" name="pid" placeholder="ID паспорта"><br/>
+                <label for="viza">VIZA</label>
+                <input type="number" name="viza" placeholder="номер VIZA"><br/>
+                <button type="reset">Отчистить</button>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+    <dialog id="da">
+        <form method="dialog">
+            <a href="/admin">Для админестраторов</a>
+        </form>
+    </dialog>
+    <script>
+        const element = document.getElementById("da");
+        function DA () {
+            let p = prompt("Введите пароль админестратора");
+            if(p == "1310"){
+                element.showModal();
+            }
+        }
+    </script>
+</body>
+</html>

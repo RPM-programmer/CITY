@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <title>МВД</title>
+    <link rel="icon" href="https://images.icon-icons.com/3081/PNG/96/police_badge_shield_icon_191292.png" type="image/x-icon">
+        <style>
+        :root{
+              --panel-bg-color: #dfe4ea;
+              --container-bg-color: #f1f2f6;
+              --text-color: #2f3542;
+              --background-color: rgba(0, 0, 100, 0.9);
+              --header-border-color: blue;
+              --link-color-in-action: blue;
+              --table-bg-color:rgb(68, 35, 255);
+              --table-header-bg-color: rgb(29, 0, 194);
+            }
+            :root[theme='dark'] {
+              --panel-bg-color: #2f3542;
+              --container-bg-color: #57606f;
+              --text-color: #ced6e0;
+              --background-color: rgb(26, 26, 26);
+              --header-border-color: rgb(56, 56, 56);
+              --link-color-in-action: red;
+              --table-bg-color:rgb(102, 111, 126);
+              --table-header-bg-color:rgb(73, 78, 88);
+            }
+        * {margin: 0;}
+        body{height: 100%;font-family: Verdana; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-color); background-color: var(--background-color); gap:1cm;}
+        div.column{display: flex; flex-direction: column; align-items: center; justify-content: center;}
+        div.row{display: flex; flex-direction: row; align-items: center; justify-content: center;}
+        div.container{background-color: var(--container-bg-color); padding: 1cm; border: 1px solid var(--header-border-color); border-radius: 1cm;}
+        div.bar{padding: 1.2rem; background: var(--panel-bg-color); border: 1px solid var(--header-border-color); border-radius: 1cm;}
+        a{text-decoration: none; color: var(--text-color);}
+        a[href]:hover{text-decoration: underline; color: var(--link-color-in-action);}
+        td.thead_3 {background-color: var(--table-bg-color); color: black; border: 1px solid snow 2px; border-radius: 3px; color: var(--text-color);}
+        td.thead_1 {background-color: var(--table-header-bg-color); color: black; border: 1px solid snow 2px; border-radius: 3px; color: var(--text-color);}
+        </style>
+    </head>
+    <body>
+        <div class="bar">
+            <a href="/home" class="bar-link">Главная</a>|
+            <a href="/home#contact" class="bar-link">Контанты</a>|
+            <a href="/home#news" class="bar-link">Новости</a>|
+            <a href="/bank" class="bar-link">Банк</a>|
+            <a href="/mvd" class="bar-link">МВД</a>|
+            <a href="/pravo" class="bar-link">Законы</a>|
+            <a onclick="alert('dd')" class="bar-link">Справка</a>|
+            <a href="https://invite.viber.com/?g2=AQBnr2GM2R3us1UlWHuElk9vOri2%2FQZhfi945Na%2Fu%2BXth4LBXxDU97tvyIuZuyRk" class="bar-link" title="Viber">Сообщество</a>|
+            <a href="#themes" class="bar-link">Тема</a>
+        </div>
+        <div class="bar">
+            <a href="#traffic_police" class="bar-link">ГАИ</a>|
+            <a href="#police" class="bar-link">Милиция</a>|
+            <a href="#moio" class="bar-link">МИВО</a>|
+            <a href="#sud" class="bar-link">Суд</a>|
+            <a href="#ps" class="bar-link">Пограничная служба</a>|
+            <a href="" class="bar-link">База данных</a>
+        </div>
+            <!--ГАИ-->
+    <div class="column container">
+        <div class="row" style="gap:10px">
+            <img src="gai-icon" width="100" height="100">
+            <h2><a name="traffic_police">ГАИ</a></h2>
+        </div>
+        
+        <h2>Для работников ГАИ:</h2>
+        <h3>Штрафы по нарушениям:</h3>
+        <div class="column container">
+            <table>
+                  <thead><tr><td class="thead_1">статья</td><td class="thead_1">нарушение</td><td class="thead_1">штраф(наказание)</td></tr></thead>
+                  <tbody>
+                    <tr><td class="thead_3">1.1</td><td class="thead_3">ДТП</td><td class="thead_3">от 400 рублей</td></tr>
+                    <tr><td class="thead_3">1.2</td><td class="thead_3">превышение скорости</td><td class="thead_3">от 150 рублей</td></tr>
+                    <tr><td class="thead_3">1.3</td><td class="thead_3">нарушение разметки</td><td class="thead_3">от 200 рублей</td></tr>
+                    <tr><td class="thead_3">1.4</td><td class="thead_3">нарушения знаков</td><td class="thead_3">от 150 рублей</td></tr>
+                    <tr><td class="thead_3">1.5</td><td class="thead_3">парковка в неположеном месте</td><td class="thead_3">от 250 рублей</td></tr>
+                    <tr><td class="thead_3">1.6</td><td class="thead_3">уход от ГАИ</td><td class="thead_3">от 450 рублей</td></tr>
+                    <tr><td class="thead_3">2.1</td><td class="thead_3">превышение скорости</td><td class="thead_3">от 100 рублей</td></tr>
+                    <tr><td class="thead_3">2.2</td><td class="thead_3">нарушения разметки</td><td class="thead_3">от 100 рублей</td></tr>
+                    <tr><td class="thead_3">2.3</td><td class="thead_3">нарушение знаков</td><td class="thead_3">от 100 рублей</td></tr>
+                    <tr><td class="thead_3">2.4</td><td class="thead_3">парковка в неположеном месте</td><td class="thead_3">от 100 рублей</td></tr>
+                    <tr><td class="thead_3">2.5</td><td class="thead_3">уход от ГАИ</td><td class="thead_3">от 350 рублей</td></tr>
+                    <tr><td class="thead_3">2.6</td><td class="thead_3">отсутствие докуменотов</td><td class="thead_3">от 100 рублей</td></tr>
+                  </tbody> 
+               </table>
+        </div>
+        <h3>База данных для ГАИ:</h3>
+        <blockquote>
+        <h4>Выписать штраф</h4>
+        <div class="column container">
+            <form method="post" action="/wf">
+                <label for="c">номер автомобиля</label><br/>
+                <input type="text" name="c" placeholder="номер" maxlength="8"><br/>
+                <label for="n">нарушение</label><br/>
+                <input type="text" name="n" placeholder="нарушение" maxlength="4"><br/>
+                <label for="p">пароль</label><br/>
+                <input type="password" name="p" placeholder="пароль ГАИ"><br/>
+                <div class="row" style="gap:10px;">
+                   <button type="reset" class="btn-reset">Отчистить</button>
+                   <button type="submit" class="btn-send">Отправить</button>
+                </div>
+            </form>
+        </div>
+        <h4>Пробить по базе</h4>
+        <div class="column container">
+            <form method="post" action="/gai-db">
+              <input type="text" placeholder="номер паспорта" name="number" maxlength="4">
+              <div class="row" style="gap: 10px;">
+                <button type="reset" class="btn-reset">Отчистить</button>
+                <button type="submit" class="btn-send" disabled>Отправить</button>
+              </div>
+            </form>
+        </div>
+        <h4>Проверить активность прав на автомобиль</h4>
+        <div class="column container">
+            <form action="/getCarStatus" method="post">
+                <label for="passportId">ID паспорта (код)</label>
+                <input type="text" name="passportId" placeholder="ID паспорта">
+                <br/>
+                <div class="row" style="gap:10px">
+                    <button type="reset" class="btn-reset">Отчистить</button>
+                    <button type="submit" class="btn-send" disabled>Отправить</button>
+                </div>
+                
+            </form>
+        </div>
+        </blockquote>
+    </div>
+    <!--Милиция-->
+    <div class="column container">
+        <div class="row" style="gap:10px">
+            <img src="police-icon" width="300" height="300">
+            <h1><a name="mil">Милиция</a></h1>
+        </div>
+        <h6><a href="viber://chat?number=+375296216172" title="Viber link - +375296216172">Начальник Милиции</a></h6>
+        <hr/>
+        <div class="row" style="gap:10px">
+            <img src="sud-icon" width="300" height="300">
+            <h1>Суд</h1>
+        </div>
+        <h2>Судебные иски</h2>
+        <h3><span class="cliker" onclick="sendIsk()">Подать</span> иск</h3>
+        <h2>Архив дел</h2>
+        <p><a href="/sud">Дела</a></p>
+    </div>
+    <!--МИВО-->ы
+    <div class="column container">
+        <img src="mivo-icon" width="300" height="300">
+        <h2><a name="MIVO">МИВО</a></h2>
+        <h3>Расследований по отношению к внутренним органам не поступило</h3>
+        <h6><span style="color: red;">404</span> Not find!</h6>
+    </div>
+    <!--Пограничная слежба-->
+    <div class="column container">
+        <img src="ps" width="300" height="300">
+        <h2><a name="ps">Пограничная служба</a></h2>
+        <h3><a name="checkVIZA">Проверить доступность выезда из страны [<span style="color: blue;">VIZA</span>]</a></h3>
+        <div class="form">
+            <form action="http://192.168.0.107:4000/gvs" method="post">
+                <label for="passportId">ID паспорта (код)</label>
+                <input type="text" name="passportId" placeholder="ID паспорта">
+                <br/>
+                <div class="row" style="gap: 10px;">
+                    <button type="reset" class="btn-reset" >Отчистить</button>
+                    <button type="submit" class="btn-send" disabled>Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <h1 onclick="window.ID.show()">e</h1>
+    <dialog id="ID">https://images.icon-icons.com/3081/PNG/96/police_badge_shield_icon_191292.png
+        <form method="post" action="/si">
+            <h2>
+                <pre>
+                                Исковое заявление
+                                     На имя <input type="text" name="odn" placeholder="Должность (Директор и т.д.)"><input type="text" name="on" placeholder="Орган (МВД и т.д.)">
+            Я <input type="text" name="name" placeholder="Имя"><input type="text" name="surname" placeholder="Фамилия"><input type="text" name="surnameT" placeholder="Отчество">,
+            желаю подать исковое заявление в суд <input type="text" name="r" placeholder="Название р-н"> раёна
+            на <input type="text" name="oName" placeholder="Имя"><input type="text" name="oSurname" placeholder="Фамилия"><input type="text" name="oSurname2" placeholder="Отчество"> 
+            за <input type="text" name="naru" placeholder="Нарушение">,
+            прошу разобраться в деле
+                </pre>
+            </h2>
+            <div class="row">
+                <button type="reset" class="btn-reset">Отчистить</button>
+                <button type="button" class="btn-reset" onclick="window.ID.close()">Отмена</button>
+                <button type="submit" class="btn-send">Подать</button>
+            </div>
+        </form>
+    </dialog>
+        <div class="container">
+            <h2><a name="themes">Тема</a></h2>
+            <input type="button" value="Тема" id="toggle-theme" />
+        </div>
+        <footer>
+          <p>Все права разрешены ©2018</p>
+        </footer>
+        <script>
+        const toggleBtn = document.querySelector("#toggle-theme");
+        toggleBtn.addEventListener("click", function() {
+          if(document.documentElement.hasAttribute("theme")){
+            document.documentElement.removeAttribute("theme");
+          }
+          else{
+            document.documentElement.setAttribute("theme", "dark");
+          }
+        });
+        </script>
+    </body>
+</html>

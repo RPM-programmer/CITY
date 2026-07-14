@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ГАИ</title>
+        <style>
+            .btn-new {
+                border-radius: 10px;
+                color: white;
+                transition: .2s linear;
+                background: #0B63F6;
+            }
+
+            .btn-new:hover {
+                box-shadow: 0 0 0 2px white, 0 0 0 4px #3C82F8;
+            }
+
+            a.blue {
+                color:rgb(0, 0, 255);
+            }
+
+            td.thead_1 {
+                background-color: rgb(81, 206, 56);
+                color: black;
+            }
+
+            td.thead_2 {
+                background-color: rgb(79, 255, 43);
+                color: black;
+            }
+
+            td.thead_3 {
+                background-color: rgb(77, 46, 255);
+                color: black;
+            }
+
+            td.text1 {
+                color: rgb(0, 0, 0);
+                background-color: rgb(255, 0, 0);
+            }
+
+            td.text2 {
+                color:rgb(0, 0, 0);
+                background-color: rgb(0, 255, 0);
+            }
+        </style>
+    </head>
+    <body>
+        <dialog open>
+            <form method="dialog">
+               <h1><a name="IOM">Информация о правах на машины</a></h1> 
+               <table>
+            <thead>
+                <tr>
+                    <td class="thead_1" rowspan="2">номер</td>
+                    <td colspan="2" class="thead_1">владелец</td>
+                    <td rowspan="2" class="thead_1">работа</td>
+                    <td rowspan="2" class="thead_1">права до </td>
+                    <td rowspan="2" class="thead_1">права имеются?</td>
+                </tr>
+                <tr>
+                    <td class="thead_2">имя</td>
+                    <td class="thead_2">фамилия</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4606-7ca</td>
+                    <td>Павел</td>
+                    <td>Романенко</td>
+                    <td>МВД</td>
+                    <td>2026.08.10</td>
+                    <td class="text2">да</td>
+                </tr>
+                <tr>
+                    <td>не имеется</td>
+                    <td>Гриша</td>
+                    <td>Куреев</td>
+                    <td>не известно</td>
+                    <td></td>
+                    <td class="text1">нет</td>
+                </tr>
+                <tr>
+                    <td>2015-7cp</td>
+                    <td>Арсений</td>
+                    <td>Зиновик</td>
+                    <td>ГАИ</td>
+                    <td>2026.07.10</td>
+                    <td class="text2">да</td>
+                </tr>
+                <tr>
+                    <td>4031-7CY</td>
+                    <td>Владислав</td>
+                    <td>Тригубович</td>
+                    <td>Милиция</td>
+                    <td class="text1">ИССЕКЛИ</td>
+                    <td class="text1">нет не проходил перездачу</td>
+                </tr>
+                <tr>
+                    <td>3420-7CY</td>
+                    <td>Егор</td>
+                    <td>Комейшо</td>
+                    <td>ГАИ</td>
+                    <td>2026.07.10</td>
+                    <td class="text2">да</td>
+                </tr>
+                <tr>
+                    <td>2081-7CA</td>
+                    <td>Максим</td>
+                    <td>Труханович</td>
+                    <td>Охрана</td>
+                    <td>2026.07.10</td>
+                    <td class="text2">да</td>
+                </tr>
+                <tr>
+                    <td>6831-7CE</td>
+                    <td>Мотвей</td>
+                    <td>Бокун</td>
+                    <td>ГАИ - начальник</td>
+                    <td class="text1"><!--2026.07.10--></td>
+                    <td class="text1">требуется перездача!</td>
+                </tr>
+                <tr>
+                    <td>2125-7KY</td>
+                    <td>Илья</td>
+                    <td></td>
+                    <td>Милиция</td>
+                    <td></td>
+                    <td class="text1">нет не проходил здачу</td>
+                </tr>
+            </tbody>
+               </table>
+               <hr/>
+               <h1>Система штрафов по нарушениям</h1>
+               <table>
+                  <thead>
+                     <tr>
+                       <td class="thead_1">статья</td>
+                       <td class="thead_1">нарушение</td>
+                       <td class="thead_1">штраф(наказание)</td>
+                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                       <td class="thead_3">1.1</td>
+                       <td class="thead_3">ДТП</td>
+                       <td class="thead_3">от 400 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">1.2</td>
+                       <td class="thead_3">превышение скорости</td>
+                       <td class="thead_3">от 150 рублей</td>
+                     </tr>
+                     <tr>
+                       <td class="thead_3">1.3</td>
+                       <td class="thead_3">нарушение разметки</td>
+                       <td class="thead_3">от 200 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">1.4</td>
+                       <td class="thead_3">нарушения знаков</td>
+                       <td class="thead_3">от 150 рублей</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="thead_3">1.5</td>
+                       <td class="thead_3">парковка в неположеном месте</td>
+                       <td class="thead_3">от 250 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">1.6</td>
+                        <td class="thead_3">уход от ГАИ</td>
+                        <td class="thead_3">от 450 рублей</td>
+                     </tr>
+                     
+                     <tr>
+                       <td class="thead_3">2.1</td>
+                       <td class="thead_3">превышение скорости</td>
+                       <td class="thead_3">от 100 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">2.2</td>
+                       <td class="thead_3">нарушения разметки</td>
+                       <td class="thead_3">от 100 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">2.3</td>
+                       <td class="thead_3">нарушение знаков</td>
+                       <td class="thead_3">от 100 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">2.4</td>
+                       <td class="thead_3">парковка в неположеном месте</td>
+                       <td class="thead_3">от 100 рублей</td>
+                     </tr>
+                     <tr>
+                        <td class="thead_3">2.5</td>
+                       <td class="thead_3">уход от ГАИ</td>
+                       <td class="thead_3">от 350 рублей</td>
+                     </tr>
+                  </tbody> 
+               </table>
+               <button type="submit">Close</button>
+            </form>
+        </dialog>
+    </body>
+</html>

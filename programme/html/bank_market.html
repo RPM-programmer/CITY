@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>City`s bank</title>
+    <link rel="icon" href="https://images.icon-icons.com/300/PNG/256/bank-icon_31875.png" type="image/x-icon">
+    <style>
+        :root{
+              --panel-bg-color: #dfe4ea;
+              --container-bg-color: #f1f2f6;
+              --text-color: #2f3542;
+              --background-color: rgba(0, 158, 3, 0.832);
+              --header-border-color: blue;
+              --link-color-in-action: blue;
+              --form-bg-color:#dbdbdd;
+              --input-bg-color:rgb(152, 255, 120);
+            }
+            :root[theme='dark'] {
+              --panel-bg-color: #2f3542;
+              --container-bg-color: #57606f;
+              --text-color: #ced6e0;
+              --background-color: rgb(26, 26, 26);
+              --header-border-color: rgb(56, 56, 56);
+              --link-color-in-action: red;
+              --form-bg-color: #6d7686;
+              --input-bg-color:#9fa7b4;
+            }
+            :root[admin ='true'] {
+              --panel-bg-color: #2f3542;
+              --container-bg-color: rgba(0, 0, 0, 0.8);
+              --form-bg-color: rgba(10, 10, 10, 0.8);
+              --text-color: rgb(123, 255, 0);
+              --background-color: black;
+              --header-border-color: rgb(11, 56, 0);
+              --link-color-in-action: rgb(0, 255, 0);
+              --news-container-bg-color:rgba(15, 15, 15, 0.7);
+            }
+        * {
+          margin: 0;
+        }
+        html{
+          height: 100%;
+        }
+        div.bar{
+          padding: 1.2rem;
+          background: var(--panel-bg-color);
+          border: 1px solid var(--header-border-color);
+          border-radius: 1cm;
+        }
+        a.bar-link{
+            padding: 1.1rem;
+        }
+        a{text-decoration: none; color: var(--text-color);}
+        a[href]:hover{text-decoration: underline; color: var(--link-color-in-action);}
+        body{background-color: var(--background-color); color:var(--text-color); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1cm;}
+        .column{display: flex; flex-direction: column; justify-content: center; align-items: center;}
+        .row{display: flex; flex-direction: row; justify-content: center; align-items: center;}
+        div.header{background-color: rgb(152, 246, 255); font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border: solid 2px blue; border-radius: 2cm; padding: 0.5cm 3cm;}
+        div.container{border: solid 2px var(--header-border-color); border-radius: 2cm; padding: 0.5cm 2cm; background-color: var(--container-bg-color);}
+        hr{width: 5cm;}
+        hr.news{color: blue;}
+        div.think{gap: 10px}
+        form{background-color: var(--form-bg-color); border: solid gray 1px; border-radius: 1cm; padding: 1cm; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;}
+        input[type="password"]{background-color: var(--input-bg-color); cursor:auto; color: red; border: 1px solid rgb(79, 163, 53); border-radius: 5px;}
+        input[type="number"]{background-color: var(--input-bg-color); cursor:auto; color: blue; border: 1px solid rgb(79, 163, 53); border-radius: 5px;}
+        input[type="submit"]{background-color: lawngreen; cursor:auto; color: black; border: 1px solid rgb(79, 163, 53); border-radius: 5px;}
+        input[type="text"]{background-color: var(--input-bg-color); cursor:auto; color: black; border: 1px solid rgb(79, 163, 53); border-radius: 5px;}
+        input[type="reset"]{background-color: red; cursor:auto; color: white; border: 1px solid rgb(162, 0, 0); border-radius: 5px;}
+        input[type="email"]{background-color: var(--input-bg-color); cursor:auto; color: green; border: 1px solid rgb(79, 163, 53); border-radius: 5px;}
+    </style>
+</head>
+<body>    
+    <div class="bar">
+            <a href="/home" class="bar-link">Главная</a>|
+            <a href="/home#contact" class="bar-link">Контанты</a>|
+            <a href="/home#news" class="bar-link">Новости</a>|
+            <a href="/bank" class="bar-link">Банк</a>|
+            <a href="/mvd" class="bar-link">МВД</a>|
+            <a href="/pravo" class="bar-link">Законы</a>|
+            <a onclick="alert('Здраствуйте! Вас приветствует версия сайта - 4.1')" class="bar-link">Справка</a>|
+            <a href="https://invite.viber.com/?g2=AQBnr2GM2R3us1UlWHuElk9vOri2%2FQZhfi945Na%2Fu%2BXth4LBXxDU97tvyIuZuyRk" class="bar-link" title="Viber">Сообщество</a>|
+            <a href="#themes" class="bar-link">Тема</a>
+    </div>
+    <div class="bar">
+            <a href="#add" class="bar-link">Добавление</a>|
+            <a href="#delete" class="bar-link">Удаление</a>|
+            <a href="#transfer" class="bar-link">Перевод</a>|
+            <a href="#block" class="bar-link">Блокирование</a>|
+            <a href="#find" class="bar-link">Баланс</a>|
+            <a href="#ub" class="bar-link">Разблокирование</a>|
+            <a href="#min" class="bar-link">Списывание</a>|
+            <a href="#am" class="bar-link">Увеличивание</a>
+    </div>
+    <div class="container column">
+        <div class="container column">
+            <h2>
+                <details>
+                    <summary>Как исспользовать?</summary>
+                    <h6>
+                       Для использования сайта (совершения банковских операций) - <br/>
+                       Нужно заполнить все поля а затем нажать кнопку "отправить" <br/>
+                       <span style="color:red">Все поля обязательны для заполнения!</span><br/>
+                       Объяснение что обозначают поля: ID, Имя, Почта, Пароль, средства:<br/>
+                       <br/>
+                       Имя, почта, пароль - поля для создания нового аккаутна:<br/>
+                       Имя - Ваше имя (на Англиском),<br/>
+                       почта - Ваша электронная почта (адрес) (gmail),<br/>
+                       пароль - придумайте пароль от вашего банковского щета<br/>
+                       <span style="color: red;">После отправки вы получите ваш ID!</span><br/>
+                       <br/>
+                       средсва - деньги хранящиеся на щету<br/>
+                       <br/>
+                       ID - уникальный номер щета, который <span style="color: red;">нельзя забывать!</span><br/>
+                       ID даёт вам доступ к щету! <span style="color: red;">При его забавании достум к деньгам на щету будет потерян!</span><br/>
+                    </h6>
+                </details>
+            </h2>
+        </div>
+        <!--группа действий 1-->
+        <div class="column think">
+            <!--группа по линии 1-->
+        <div class="row think">
+        <form action="/d" method="post" autocomplete="off">
+            <h3><a name="delete">удаление счета</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        <form action="/b" method="post" autocomplete="off">
+            <h3><a name="block">блокирование счета</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        </div>
+        <!--группа по линии 2-->
+        <div class="row think">
+            <form action="/tm" method="post" autocomplete="off">
+            <h3><a name="tranfer">перевод</a></h3>
+            <p>
+                <label>перевести с (ID):</label><br/>
+                <input type="number" name="from"/>
+            </p>
+            <p>
+                <label>перевести на (ID):</label><br/>
+                <input type="number" name="to">
+            </p>
+            <p>
+                <label>перевести (средсва):</label><br/>
+                <input type="number" name="manny">
+            </p>
+            <p>
+                <label>пароль:</label><br/>
+                <input type="password" name="password"><br/>
+            </p>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        <form action="/cba" method="post" autocomplete="off">
+            <h3><a name="add">добавление счета</a></h3>
+           <p>
+              <label>Имя:</label><br/>
+              <input type="text" name="name">
+           </p>
+           <p>
+              <label>почта:</label><br/>
+              <input type="email" name="email">
+           </p>
+           <p>
+              <label>пароль:</label><br/>
+              <input type="password" name="password">
+           </p>
+           <input type="submit" value="Отправить"/>
+           <input type="reset" value="Отчистить"/>
+        </form>
+        </div>
+        <!--группа по линии 3-->
+        <form action="/j" method="post" autocomplete="off">
+            <h3><a name="find">Получение баланса</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        </div>
+    </div>
+    <div class="column container">
+        <h2>Для персонала</h2>
+        <form action="/ub" method="post" autocomplete="off">
+            <h3><a name="ub">Разблокирование счета</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        <form action="/s" method="post" autocomplete="off">
+            <h3><a name="min">списание со счета</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="count">списать (рублей):</label><br/>
+            <input type="number" name="count"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+        <form action="/a" method="post" autocomplete="off">
+            <h3><a name="am">добавление на счёт</a></h3>
+            <label for="id">ID:</label><br/>
+            <input type="number" name="id"><br/>
+            <label for="count">добавить (рублей):</label><br/>
+            <input type="number" name="count"><br/>
+            <label for="password">пароль:</label><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Отправить" />
+            <input type="reset" value="Отчистить"/>
+        </form>
+    </div>
+    <div class="column container">
+        <h2>Политика конфиденциальности<br/> онлайн-банка "Банк-онлайн"</h2>
+        <h3>1. Введение</h3>
+        <h4><details><summary>...</summary>Политика конфиденциальности определяет, как онлайн-банк "Банк-онлайн".<br/> Банк <b><i>собирает, использует, хранит, раскрывает и защищает</i></b> вашу персональную информацию.<br/> Мы стремимся обеспечить максимальную конфиденциальность и безопасность ваших данных.<br/> Пользуясь услугами Банка, вы соглашаетесь с условиями, изложенными в Политике.</details></h4>
+        <h3>2. Сбор персональных данных</h3>
+        <h4><details><summary>...</summary>Мы собираем различные типы персональных данных, необходимых для предоставления вам банковских услуг.<br/> Это может включать: Пароль акаунта, Электронная почта, Имя<br/>Финансовая информация: Данные о счетах, транзакциях, кредитной истории.<br/>Технические данные: IP-адрес, тип устройства, данные о вашем браузере, файлы cookie.<br/>Данные об использовании: Информация о том, как вы взаимодействуете с нашим веб-сайтом и мобильным приложением.</details></h4>
+        <h3>3. Использование персональных данных</h3>
+        <h4><details><summary>...</summary>Ваши персональные данные используются для следующих целей:<br/><br/>Предоставление и управление вашими банковскими счетами и услугами.<br/>Идентификация вас как клиента и обеспечение безопасности ваших транзакций.<br/>Обработка ваших запросов и предоставление поддержки.<br/>Улучшение наших продуктов и услуг, анализ пользовательского поведения.<br/>Соблюдение законодательных и нормативных требований.</details></h4>
+        <h3>4. Раскрытие персональных данных</h3>
+        <h4><details><summary>...</summary>Мы можем раскрывать ваши персональные данные в следующих случаях:<br/><br/>С вашего согласия:<br/> Если вы прямо разрешили нам раскрыть ваши данные определенным третьим лицам.<br/>Поставщикам услуг:<br/> Компании, которые помогают нам в предоставлении услуг, при условии соблюдения ими конфиденциальности.<br/>В соответствии с законом:<br/> Если это требуется по закону, по решению суда или запросу регулирующих органов.<br/>В случае слияния или поглощения:<br/> При реорганизации Банка ваши данные могут быть переданы новому владельцу.</details></h4>
+        <h3>5. Безопасность данных</h3>
+        <h4><details><summary>...</summary>Мы применяем комплексные технические и организационные меры безопасности для защиты ваших персональных данных.<br/> Это включает шифрование данных, многофакторную аутентификацию и регулярный аудит систем безопасности.</details></h4>
+        <h3>6. Ваши права</h3>
+        <h4><details><summary>...</summary>Вы имеете право на доступ к своим персональным данным, их исправление, удаление, ограничение обработки, а также право на портативность данных.<br/> Для реализации этих прав, пожалуйста, свяжитесь с нами.</details></h4>
+        <h3>7. Изменения Политики</h3>
+        <h4><details><summary>...</summary>Мы можем периодически обновлять Политику.<br/> О любых существенных изменениях мы сообщим вам через наш веб-сайт или по электронной почте.</details></h4>
+        <h3>8. Контактная информация</h3>
+        <h4><details><summary>...</summary>По всем вопросам, связанным с настоящей Политикой, обращайтесь в службу поддержки "Банк-онлайн".</details></h4>
+    </div>
+    <div class="column container">
+            <h2><a name="themes">Тема</a></h2>
+            <h3></h3>
+            <input type="button" value="Тёмная тема" id="toggle-theme" />
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.24/ua-parser.min.js"></script>
+        <script>
+            const toggleBtn = document.querySelector("#toggle-theme");
+        toggleBtn.addEventListener("click", function() {
+          if(document.documentElement.hasAttribute("theme")){
+            document.documentElement.removeAttribute("theme");
+            toggleBtn.value = "Тёмная тема";
+          }
+          else{
+            document.documentElement.setAttribute("theme", "dark");
+            toggleBtn.value = "Светлая тема";
+          }
+        });
+            const parser = new UAParser();
+const result = parser.getResult();
+            async function getUserInfo() {
+    try {
+        const response = await fetch('http://localhost:3000/api/un', {
+            method: 'GET'
+        });
+
+        // Проверяем, успешен ли ответ (статус 2xx)
+        if (response.ok) {
+            // Получаем текстовое содержимое ответа
+            const data = await response.text(); // Используйте response.json() если сервер отправляет JSON
+            console.log("Полученные данные:", data); // Теперь здесь будет ваша строка
+            if(data.toLowerCase() == "pl" && result.browser.name == "Firefox"){
+                console.log("Привет Павел!");
+                document.documentElement.setAttribute("admin", "true");
+                if(document.documentElement.hasAttribute("theme")){
+                    document.documentElement.removeAttribute("theme");
+                }
+            }
+        } else {
+            console.error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Ошибка запроса:', error);
+    }
+}
+
+// Вызываем функцию при загрузке страницы
+getUserInfo();
+        </script>
+</body>
+</html>

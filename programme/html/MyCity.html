@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="https://images.icon-icons.com/865/PNG/96/Citycons_building_icon-icons.com_67935.png" type="image/x-icon">
+        <title>My City - home</title>
+        <style>
+            body{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--background-color);
+                color: var(--text-color);
+                height: 100%;
+                font-family: Verdana;
+                gap:1cm;
+            }
+            :root{
+              --panel-bg-color: #dfe4ea;
+              --container-bg-color: #f1f2f6;
+              --text-color: #2f3542;
+              --background-color: lightgreen;
+              --header-border-color: blue;
+              --link-color-in-action: blue;
+              --news-container-bg-color:#e4e4e4;
+            }
+            :root[theme='dark'] {
+              --news-container-bg-color:rgb(89, 98, 113);
+              --panel-bg-color: #2f3542;
+              --container-bg-color: #57606f;
+              --text-color: #ced6e0;
+              --background-color: rgb(26, 26, 26);
+              --header-border-color: rgb(56, 56, 56);
+              --link-color-in-action: red;
+            }
+            :root[admin ='true'] {
+              --panel-bg-color: #2f3542;
+              --container-bg-color: rgba(0, 0, 0, 0.8);
+              --text-color: rgb(123, 255, 0);
+              --background-color: black;
+              --header-border-color: rgb(11, 56, 0);
+              --link-color-in-action: rgb(0, 255, 0);
+              --news-container-bg-color:rgba(15, 15, 15, 0.7);
+            }
+        * {
+          margin: 0;
+        }
+        div.bar{
+          padding: 1.2rem;
+          background: var(--panel-bg-color);
+          border: 1px solid var(--header-border-color);
+          border-radius: 1cm;
+        }
+        a.bar-link{
+            padding: 1.1rem;
+        }
+        a{text-decoration: none; color: var(--text-color);}
+        a[href]:hover{text-decoration: underline; color: var(--link-color-in-action);}
+        div.column{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        div.row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        div.container{
+            background-color: var(--container-bg-color);
+            padding: 1cm;
+            border: 1px solid var(--header-border-color);
+            border-radius: 1cm;
+        }
+        div.news-container{
+            padding: 0.5cm;
+            border: none;
+            border-radius: 0.5cm;
+            background-color: var(--news-container-bg-color);
+        }
+        </style>
+    </head>
+    <body>
+        <div class="bar">
+            <a href="/home" class="bar-link">Главная</a>|
+            <a href="/home#contact" class="bar-link">Контанты</a>|
+            <a href="/home#news" class="bar-link">Новости</a>|
+            <a href="/bank" class="bar-link">Банк</a>|
+            <a href="/mvd" class="bar-link">МВД</a>|
+            <a href="/pravo" class="bar-link">Законы</a>|
+            <a onclick="alert('Здраствуйте! Вас приветствует версия сайта - 4.1')" class="bar-link">Справка</a>|
+            <a href="https://invite.viber.com/?g2=AQBnr2GM2R3us1UlWHuElk9vOri2%2FQZhfi945Na%2Fu%2BXth4LBXxDU97tvyIuZuyRk" class="bar-link" title="Viber">Сообщество</a>|
+            <a href="#themes" class="bar-link">Тема</a>
+        </div>
+        <div class="column container">
+            <h2><a name='news'>Новости</a></h2>
+            <table>
+                <thead><tr><th><div class="news-container">en</div></th><th><div class="news-container">ru</div></th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><div class="news-container"><h3>What's on our website now?<br/><br/> News;<br/> Bank and Ministry of Internal Affairs websites;<br/> the book of laws (constitution);<br/> an open database</h3></div></td>
+                        <td><div class="news-container"><h3>Что теперь есть на нашем сайте?<br/><br/>  Новости;<br/> сайт Банка, МВД;<br/> книга законов (конституция);<br/> открытая база данных</h3></div></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="column container">
+            <h2><a name="contact">Контакты</a></h2>
+            <hr/>
+            <h3>Начальники</h3>
+            <div class="row" style="row-gap: 10px;">
+                <h4><a href="viber://chat?number=+375445214573" title="Романенко Павел">МВД</a></h4>|
+                <h4><a href="viber://chat?number=+375296216172" title="Тригубович Влад">Милиция</a></h4>|
+                <h4><a href="viber://chat?number=+375297884385" title="Мотвей Бокун">ГАИ</a></h4>|
+                <h4><a href="" title="">УМП</a></h4>
+            </div>
+            
+        </div>
+        <div class="column container">
+            <h2><a name="themes">Тема</a></h2>
+            <h3></h3>
+            <input type="button" value="Тёмная тема" id="toggle-theme" />
+        </div>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.24/ua-parser.min.js"></script>
+        <script>
+            const toggleBtn = document.querySelector("#toggle-theme");
+        toggleBtn.addEventListener("click", function() {
+          if(document.documentElement.hasAttribute("theme")){
+            document.documentElement.removeAttribute("theme");
+            toggleBtn.value = "Тёмная тема";
+          }
+          else{
+            document.documentElement.setAttribute("theme", "dark");
+            toggleBtn.value = "Светлая тема";
+          }
+        });
+            const parser = new UAParser();
+const result = parser.getResult();
+            async function getUserInfo() {
+    try {
+        const response = await fetch('http://localhost:3000/api/un', {
+            method: 'GET'
+        });
+
+        // Проверяем, успешен ли ответ (статус 2xx)
+        if (response.ok) {
+            // Получаем текстовое содержимое ответа
+            const data = await response.text(); // Используйте response.json() если сервер отправляет JSON
+            console.log("Полученные данные:", data); // Теперь здесь будет ваша строка
+            if(data.toLowerCase() == "pl" && result.browser.name == "Firefox"){
+                console.log("Привет Павел!");
+                document.documentElement.setAttribute("admin", "true");
+                if(document.documentElement.hasAttribute("theme")){
+                    document.documentElement.removeAttribute("theme");
+                }
+            }
+        } else {
+            console.error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Ошибка запроса:', error);
+    }
+}
+
+// Вызываем функцию при загрузке страницы
+getUserInfo();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+          body{display: flex; flex-direction:column; align-items: center; justify-content: center; font-family: Verdana, Geneva, Tahoma, sans-serif; background-color: rgb(63, 255, 63); gap: 3cm;}
+          h1.header, h2.header, h3.header {color: blue;}
+          div.box {display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: aliceblue; border-radius: 1cm; border-color: blue; border-width: 3px; padding: 1cm;}
+          div.row {display: flex; flex-direction: row; align-items: center; justify-content: center; gap:2cm; }
+          table {width: 100%; border-collapse: collapse; margin-top: 20px;}
+          td.us {border: 1px solid #ddd; padding: 8px; text-align: left; background-color: rgb(255, 255, 0);}
+          th {border: 1px solid #ddd; padding: 8px; text-align: left;}
+          .thead {background-color: rgba(255, 0, 0, 0.74); font-weight: bold; border: 1px solid #ddd; padding: 3px;}
+          .tbody {background-color: rgba(0, 0, 255, 0.74); border: 1px solid #ddd; padding: 3px;}
+          .month-cell {background-color: rgb(133, 255, 139);}
+          .yellow-cell { background-color: yellow } 
+          .green-cell { background-color: #2ecc71; } 
+          .red-cell { background-color: #e74c3c; } 
+          .black-cell { background-color: #34495e; }
+          .status-ok { color: #fff; font-weight: bold; } 
+          .status-fail { color: #ff0000; font-weight: bold; } 
+          td:empty {background-color: #ecf0f1;}
+         .red-cell:empty {background-color: #e74c3c;}
+         @media (max-width: 768px) {div {width: 95%;}}
+        </style>
+        <meta charset="UTF-8">
+        <meta author="romanenko pavel">
+        <title>для админов</title>
+    </head>
+    <body>
+     <h1 class="header">Для админестраторов игры</h1>
+     <div class="box">
+       <ul>
+      <li><a href="#OB">отчёт банка</a></li>
+      <li><a href="#OM">отчёт милици</a></li>
+      <li><a href="#OG">отчёт гаи</a></li>
+      <li><a href="#OMI">отчёт МИВО</a></li>
+      <li><a href="#OS">отчёт суда</a></li>
+      <li><a href="#SI">сводка играющих</a></li>
+      <li><a href="#SOI">сводка отчёта играющих</a></li>
+      <li><a href="#SG">сводка ГАИ</a></li>
+     </ul>
+     </div>
+     <div class="box">
+      <h2 class="header"><a name="OB">отчёт банка</a></h2>
+      <h3 class="header">отчёт о купюрах</h3>
+      <div>
+      <table>
+        <thead>
+          <tr>
+            <td class="thead">цена одного</td>
+            <td class="thead">сумма всех</td>
+            <td class="thead">партия</td>
+            <td class="thead">номера</td>
+            <td class="thead">партия поступила в оборот</td>
+            <td class="thead">1</td>
+            <td class="thead">2</td>
+            <td class="thead">3</td>
+            <td class="thead">4</td>
+            <td class="thead">5</td>
+            <td class="thead">6</td>
+            <td class="thead">7</td>
+            <td class="thead">8</td>
+            <td class="thead">9</td>
+            <td class="thead">10</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="12" class="tbody">50</td>
+            <td rowspan="12" class="tbody">5900</td>
+            <td class="tbody">1</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">2</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">3</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">4</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">5</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">6</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">7</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">8</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">9</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">10</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">11</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">12</td>
+            <td class="tbody">50101 - 50110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
+            <td class="thead">цена одного</td>
+            <td class="thead">сумма всех</td>
+            <td class="thead">партия</td>
+            <td class="thead">номера</td>
+            <td class="thead">партия поступила в оборот</td>
+            <td class="thead">1</td>
+            <td class="thead">2</td>
+            <td class="thead">3</td>
+            <td class="thead">4</td>
+            <td class="thead">5</td>
+            <td class="thead">6</td>
+            <td class="thead">7</td>
+            <td class="thead">8</td>
+            <td class="thead">9</td>
+            <td class="thead">10</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="3" class="tbody">100</td>
+            <td rowspan="3" class="tbody">3000</td>
+            <td class="tbody">1</td>
+            <td class="tbody">100101 - 100110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">2</td>
+            <td class="tbody">100201 - 100210</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">3</td>
+            <td class="tbody">100301 - 100310</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody" rowspan="3">500</td>
+            <td class="tbody" rowspan="3">12500</td>
+            <td class="tbody">1</td>
+            <td class="tbody">500101 - 500110</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">2</td>
+            <td class="tbody">500201 - 500210</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+          <tr>
+            <td class="tbody">3</td>
+            <td class="tbody">500301 - 500310</td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+            <td class="us"></td>
+          </tr>
+        </tbody>
+        <tbody>
+
+        </tbody>
+      </table>
+      </div>
+      <h3 class="header">отчёт о ипотеках</h3>
+      <table>
+        <thead>
+          <tr>
+            <td class="thead">Имя</td>
+            <td class="thead">Фамилия</td>
+            <td class="thead">Номер телефона</td>
+            <td class="thead">наименование недвижемости</td>
+            <td class="thead">цена недвижемости</td>
+            <td class="thead">ежемесечная выплата</td>
+            <td class="thead">количество месяцев</td>
+            <td class="thead">процент (цена)</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+            <td class="tbody">-</td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+     <div class="box">
+      <h2><a name="OM">отчёт милици</a></h2>
+      <table>
+        <thead>
+            <tr>
+                <th class="thead" rowspan="2">Месяц</th>
+                <th class="thead" colspan="3">Имена работников</th>
+                <th class="thead" rowspan="2">начальник</th>
+                <th class="thead" colspan="2">рядовой</th>
+                <th class="thead" rowspan="2">з. Плата</th>
+                <th class="thead" colspan="3">Время работы отделов</th>
+                <th class="thead" rowspan="2">Кол-во расследованных дел</th>
+                <th class="thead" rowspan="2">Кол-во пойманных преступников</th>
+                <th class="thead" rowspan="2">Кол-во упущенных преступников</th>
+                <th class="thead" rowspan="2">Преступность</th>
+            </tr>
+            <tr>
+                <th class="thead">Имя</th>
+                <th class="thead">Имя</th>
+                <th class="thead">Имя</th>
+                <th class="thead">Имя</th>
+                <th class="thead">Имя</th>
+                <th class="thead">ОР</th>
+                <th class="thead">К</th>
+                <th class="thead">СР</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="month-cell">1</td>
+                <td class="tbody">Влад</td>
+                <td class="tbody">Илья</td>
+                <td class="tbody">Максим</td>
+                <td class="tbody">Влад</td>
+                <td class="tbody">Илья</td>
+                <td class="tbody">Максим</td>
+                <td class="tbody">500</td>
+                <td class="tbody">c 3 до 8</td>
+                <td class="tbody">c 3 до 8</td>
+                <td class="tbody">c 12 до 15</td>
+                <td class="tbody">0</td>
+                <td class="tbody">0</td>
+                <td class="tbody">0</td>
+                <td class="tbody">0</td>
+            </tr>
+        </tbody>
+    </table>
+     </div>
+     <div class="box">
+      <h2><a name="OG">отчёт гаи</a></h2>
+      <table>
+      <thead>
+        <tr>
+          <td class="thead">месяц</td>
+          <td class="thead">коль-во сотрудников</td>
+          <td class="thead" colspan="3">имена сотрудников</td>
+          <td class="thead">на должности начальника</td>
+          <td class="thead" colspan="2">на должности рядовых</td>
+          <td class="thead">доход</td>
+          <td class="thead">налог</td>
+          <td class="thead">коль-во нарушителей</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="background-color:rgb(133, 255, 139)">1</td>
+          <td class="tbody">3</td>
+          <td class="tbody">Арсений</td>
+          <td class="tbody">Егор</td>
+          <td class="tbody">Мотвей</td>
+          <td class="tbody">Мотвей</td>
+          <td class="tbody">Егор</td>
+          <td class="tbody">Арсений</td>
+          <td class="tbody">null</td>
+          <td class="tbody">null</td>
+          <td class="tbody">null</td>
+        </tr>
+        <tr>
+          <td style="background-color:rgb(133, 255, 139)">2</td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+          <td class="tbody"></td>
+        </tr>
+      </tbody>
+     </table>
+     </div>
+     <div class="box">
+      <h2><a name="OMI">отчёт МИВО</a></h2>
+      <table>
+        <thead>
+            <tr>
+                <th rowspan="2" class="thead">Месяц</th>
+                <th rowspan="2" class="thead">Вид Работы</th>
+                <th rowspan="2" class="thead">Доход</th>
+                <th rowspan="2" class="thead">Налог</th>
+                <th rowspan="2" class="thead">Зарплата Работников</th>
+                <th colspan="3" class="thead">Кол-во Работников</th>
+                <th colspan="4" class="thead">Нарушения</th>
+                <th rowspan="2" class="thead">Штраф по нарушениям</th>
+                <th rowspan="2" class="thead">Судебные Иски</th>
+            </tr>
+            <tr>
+                <th class="thead">1</th> <th class="thead">2</th> <th class="thead">3</th>
+                <th class="thead">Кол-во</th><th class="thead"><span title="Опасность">🔥</span></th><th class="thead"><span title="Больница">🏥</span></th><th class="thead"><span title="Щит">🛡️</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="6" class="tbody">1</td> <!-- Месяц 1 для всех строк ниже -->
+                <td class="tbody">ГАИ</td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="tbody">✅</td>
+                <td class="tbody">✅</td>
+                <td class="tbody">✅</td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+            </tr>
+            <tr>
+                <td class="tbody">Милиция</td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="green-cell status-ok">✅</td>
+                <td class="green-cell status-ok">✅</td> 
+                <td class="green-cell status-ok">✅</td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>  
+            </tr>
+            <tr>
+                <td class="tbody">МОЗ</td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="green-cell status-ok">✅</td> 
+                <td class="green-cell status-ok">✅</td> 
+                <td class="green-cell status-ok">✅</td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td> 
+            </tr>
+            <tr>
+                <td class="tbody">Банк</td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="green-cell status-ok">✅</td>
+                <td class="red-cell status-fail"></td> 
+                <td class="red-cell status-fail"></td> <!-- ✅ (красный) -->
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td> 
+            </tr>
+            <tr>
+                <td class="tbody">МВД</td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="green-cell status-ok">✅</td>
+                <td class="red-cell status-fail"></td> 
+                <td class="red-cell status-fail"></td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td> 
+            </tr>
+            <tr>
+                <td class="tbody">Заправка</td> <!-- Отдельная строка для заправки -->
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="black-cell"></td> <!-- Черный для ЗП -->
+                <td class="green-cell status-ok">✅</td>
+                <td class="red-cell status-fail"></td> 
+                <td class="red-cell status-fail"></td>
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td> 
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td>
+                <td class="yellow-cell"></td> 
+            </tr>
+        </tbody>
+    </table>
+     </div>
+     <div class="box">
+      <h2><a name="OS">отчёт суда</a></h2>
+      <h3>дел небыло</h3>
+      <h3><a href="http://192.168.0.107:8000/topSecret_file" title="Секретная информация">Доп информация</a></h3>
+     </div>
+     
+     
+     <h2><a name="SOI">сводка отчёта играющих</a></h2>
+     <table>
+          <thead>
+            <tr>
+              <td class="thead">имя</td>
+              <td class="thead">фамилия</td>
+              <td class="thead">штрафы (голичество)</td>
+              <td class="thead">штрафы (сумма)</td>
+              <td class="thead">количество зарплат</td>
+              <td class="thead">сумма зарплат</td>
+              <td class="thead">количество сбора налогов</td>
+              <td class="thead">сумма сбора налогов</td>
+              <td class="thead">работа</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tbody">Арсений</td>
+              <td class="tbody">Зиновик</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">ГАИ - патрульный, ответственный за сохранность знаков как на столбах так и на дороге</td>
+            </tr>
+            <tr>
+              <td class="tbody">Павел</td>
+              <td class="tbody">Романенко</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">МВД РБ - директор по работе над уголовной и админестративной ответственности, директор комиссии по работе над законами, ответственный за проверку госуд. и не госуд. компаний</td>
+            </tr>
+            <tr>
+              <td class="tbody">Мотвей</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">ГАИ - директор ГАИ, ответственный за отчёты ГАИ, ответственный за выдачу зарплаты работникам ГАИ</td>
+            </tr>
+            <tr>
+              <td class="tbody">Егор</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">ГАИ-патрульный</td>
+            </tr>
+            <tr>
+              <td class="tbody">Максим</td>
+              <td class="tbody">Труханович</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">МВД РБ - охрана, ответственный за безопасность банка</td>
+            </tr>
+            <tr>
+              <td class="tbody">Гриша</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+            </tr>
+            <tr>
+              <td class="tbody">Влад</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+              <td class="tbody">null</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr/>
+        <h2><a name="SI">сводка играющих</a></h2>
+        <table>
+          <thead>
+            <tr>
+              <td class="thead">имя</td>
+              <td class="thead">адрес</td>
+              <td class="thead">номер машины</td>
+              <td class="thead">банковская карта</td>
+              <td class="thead">номер VIZA</td>
+              <td class="thead">номер телефона</td>
+              <td class="thead">работа</td>
+              <td class="thead">номер паспорта</td>
+              <td class="thead">код</td>
+              <td class="thead">код работы</td>
+              <td class="thead">дт. рож</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr> <!--пользователь-->
+              <td class="tbody">Павел</td>
+              <td class="tbody" rowspan="3">ул. Волоха - 3</td>
+              <td class="tbody">4606-7ca</td>
+              <td class="tbody">PR3184*a*bb</td>
+              <td class="tbody" rowspan="3">3848 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375256811152" title="viber" style="color:black">+375256811152</a></td>
+              <td class="tbody" rowspan="3">Инкосация, МВД, КГБ</td>
+              <td class="tbody" rowspan="3">A341a82</td>
+              <td class="tbody" rowspan="3">13102014</td>
+              <td class="tbody" rowspan="3">2430</td>
+              <td class="tbody" rowspan="3">13.10.2014</td>
+            </tr>
+            <tr>
+              <td class="tbody">Романенко</td>
+              <td class="tbody">4505-7cu</td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Михайлович</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr> <!--пользователь-->
+              <td class="tbody">Арсений</td>
+              <td class="tbody" rowspan="3">ул. Карла Либнехта - 2 - 1</td>
+              <td class="tbody">2015-7ca</td>
+              <td class="tbody">AZ2141*a*bb</td>
+              <td class="tbody" rowspan="3">3451 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375296830257" title="viber" style="color:black">+375296830257</a></td>
+              <td class="tbody" rowspan="3">ГАИ</td>
+              <td class="tbody" rowspan="3">A384a12</td>
+              <td class="tbody" rowspan="3">28022014</td>
+              <td class="tbody" rowspan="3">1213</td>
+              <td class="tbody" rowspan="3">28.02.2014</td>
+            </tr>
+            <tr>
+              <td class="tbody">Зиновик</td>
+              <td class="tbody">3480-7cu</td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Сергеевич</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr> <!--пользователь-->
+              <td class="tbody">Егор</td>
+              <td class="tbody" rowspan="3">ул. Карла Либнехта - 2 - 2</td>
+              <td class="tbody">3420-7ca</td>
+              <td class="tbody">EK4510*a*bb</td>
+              <td class="tbody" rowspan="3">4510 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375297417564" title="viber" style="color:black">+375297417564</a></td>
+              <td class="tbody" rowspan="3">ГАИ</td>
+              <td class="tbody" rowspan="3">A348b11</td>
+              <td class="tbody" rowspan="3">1236</td>
+              <td class="tbody" rowspan="3">1213</td>
+              <td class="tbody" rowspan="3"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Комейшо</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Максимович</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr> <!--пользователь-->
+              <td class="tbody">Максим</td>
+              <td class="tbody" rowspan="3"></td>
+              <td class="tbody">2081-7ca</td>
+              <td class="tbody">MT3541*a*bb</td>
+              <td class="tbody" rowspan="3">3541 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375257416958" title="viber" style="color:black">+375257416958</a></td>
+              <td class="tbody" rowspan="3">охрана</td>
+              <td class="tbody" rowspan="3">B348b31</td>
+              <td class="tbody" rowspan="3">3438</td>
+              <td class="tbody" rowspan="3">1314</td>
+              <td class="tbody" rowspan="3"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Труханович</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr> <!--пользователь-->
+              <td class="tbody">Мотвей</td>
+              <td class="tbody" rowspan="3"></td>
+              <td class="tbody">6831-7ce</td>
+              <td class="tbody">MB3480*a*bb</td>
+              <td class="tbody" rowspan="3">3480 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375256811152" title="viber" style="color:black">+375256811152</a></td>
+              <td class="tbody" rowspan="3">ГАИ начальник</td>
+              <td class="tbody" rowspan="3">A384b00</td>
+              <td class="tbody" rowspan="3">2145</td>
+              <td class="tbody" rowspan="3">1213</td>
+              <td class="tbody" rowspan="3">07.05.2013</td>
+            </tr>
+            <tr>
+              <td class="tbody">Бокун</td>
+              <td class="tbody">4505-7cu</td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Егорович</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            <tr> <!--пользователь-->
+              <td class="tbody">Павел</td>
+              <td class="tbody" rowspan="3">ул. Волоха - 3</td>
+              <td class="tbody">4606-7ca</td>
+              <td class="tbody">PR3184*a*bb</td>
+              <td class="tbody" rowspan="3">3848 Belarus</td>
+              <td class="tbody" rowspan="3"><a href="viber://chat?number=+375256811152" title="viber" style="color:black">+375256811152</a></td>
+              <td class="tbody" rowspan="3">Инкосация, МВД, КГБ</td>
+              <td class="tbody" rowspan="3">A341a82</td>
+              <td class="tbody" rowspan="3">13102014</td>
+              <td class="tbody" rowspan="3">2430</td>
+              <td class="tbody" rowspan="3">13.10.2014</td>
+            </tr>
+            <tr>
+              <td class="tbody">Романенко</td>
+              <td class="tbody">4505-7cu</td>
+              <td class="tbody"></td>
+            </tr>
+            <tr>
+              <td class="tbody">Михайлович</td>
+              <td class="tbody"></td>
+              <td class="tbody"></td>
+            </tr>
+            
+          </tbody>
+        </table>
+        <h2><a name="SG">сводка ГАИ</a></h2>
+        <table>
+          <thead>
+            <tr>
+              <td class="thead">номер</td>
+              <td class="thead">владелец</td>
+              <td class="thead">разрешение</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tbody">4606-7CA</td>
+              <td class="tbody">Романенко Павел</td>
+              <td class="green"></td>
+            </tr>
+            <tr>
+              <td class="tbody">2015-7CA</td>
+              <td class="tbody">Арсений Зиновик</td>
+              <td class="green"></td>
+            </tr>
+            <tr>
+              <td class="tbody">3420-7CY</td>
+              <td class="tbody">Егор Комейшо</td>
+              <td class="green"></td>
+            </tr>
+            <tr>
+              <td class="tbody">2081-7CA</td>
+              <td class="tbody">Максим Труханович</td>
+              <td class="green"></td>
+            </tr>
+            <tr>
+              <td class="tbody">6831-7CE</td>
+              <td class="tbody">Мотвей Бокун</td>
+              <td class="green"></td>
+            </tr>
+            <tr>
+              <td class="tbody"></td>
+              <td class="tbody">Гриша Куреев</td>
+              <td class="red"></td>
+            </tr>
+            <tr>
+              <td class="tbody">8182-7CE</td>
+              <td class="tbody">Игнат Поляк</td>
+              <td class="red"></td>
+            </tr>
+            <tr>
+              <td class="tbody">2125-7KY</td>
+              <td class="tbody">Илья</td>
+              <td class="green"></td>
+            </tr>
+          </tbody>
+        </table>
+    </body>
+</html>
