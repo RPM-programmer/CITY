@@ -1,21 +1,41 @@
+// модули
+// скачанные / по умолчанию
 const rateLimit = require("express-rate-limit");
 const process = require("process");
-const BD = require("./module/database.js").b;
-const cs = require("/media/pl/PD/CodeExample/node/chalk_terminalStyle/example_terminalStyle.js").c;
-const pb = require("/media/pl/PD/CodeExample/node/progress_ProgressBar/example_progress_ProgressBar.js").c;
+const { default: chalk } = require("chalk");
+const cors = require("cors");
+const path = require("path");
+const express = require("express");
 const fs = require("fs");
 const os = require("os");
-const express = require("express");
-const app = express();
-const path = require("path");
-const cors = require("cors");
-const { default: chalk } = require("chalk");
+
+
+// свои (вложенные)
+const BD = require("./module/database.js").b;
+const pb = require("/media/pl/PD/CodeExample/node/progress_ProgressBar/example_progress_ProgressBar.js").c;
 const L = require("./module/sm.js").cm;
+
+
+// создание сервера на express
+const app = express();
+
 
 // Константы для лог-файлов
 const LOGS_FILE = "SIOUI.log";
 const FINE_FILE = "STPdbOUF.log"; 
 const ISK_FILE = "SdbOUI.log";
+
+
+// пути для файлов (абсолютные)
+const home = path.resolve("html", "MyCity.html");
+const bank = path.resolve("html", "bank_market.html")
+const admin = path.resolve("html", "admin.html");
+const forAdmin = path.resolve("html", "for_admin.html");
+const mvd = path.resolve("html", "mvd.html");
+const pravo = path.resolve("html", "pravo.html");
+const user = path.resolve("html", "users.html");
+
+// функция отправки файла
 async function serveFile(filePath, res) {
   const mimeTypes = {
     '.html': 'text/html',
@@ -120,28 +140,16 @@ app.get("/ps", async (req, res) => {
   serveFile("/home/pl/Desktop/CITY/icon/Pasted image.png", res);
 });
 app.get("/home", async (req, res) => {
-  res.sendFile("/home/pl/Desktop/CITY/programme/html/MyCity.html");
+  res.sendFile(home);
 });
 app.get("/bank", async (req, res) => {
-  res.sendFile("/home/pl/Desktop/CITY/programme/html/bank_market.html");
+  res.sendFile(bank);
 });
 app.get("/mvd", async (req, res) => {
-  res.sendFile("/home/pl/Desktop/CITY/programme/html/mvd.html");
+  res.sendFile(mvd);
 });
 app.get("/pravo", async (req, res) => {
-  res.sendFile("/home/pl/Desktop/CITY/programme/html/pravo.html");
-});
-app.get("/user", (req, res) => {
-  res.redirect("/error/id:1");
-});
-app.get("/admin", (req, res) => {
-  res.redirect("/error/id:1");
-});
-app.get("/sud", (req, res) => {
-  res.redirect("/sud/cases");
-});
-app.get("/sud/cases", (req, res) => {
-  res.status(404).send("Ресурс /sud/cases не найден!");
+  res.sendFile(pravo);
 });
 app.get("/api/un", function(req, res){
   res.send(os.userInfo().username);
@@ -342,11 +350,6 @@ app.post("/wf", express.urlencoded({ extended: false }), (req, res) => {
         res.status(401).send("<h1>Доступ запрещен!</h1><p>Неверный пароль для записи информации о штрафах.</p><a href='/mvd'>Вернуться</a>");
     }
 });
-const PORT = 3000;
-const HOST = "0.0.0.0";
-app.listen(PORT, HOST, () => {
-  console.log(L.ServerInfo(`Сервер запущен и прослушивает ${HOST}:${PORT}`));
-});
 
 // Обработчик для несуществующих маршрутов
 app.use((req, res) => {
@@ -358,3 +361,5 @@ app.use((err, req, res, next) => {
   console.error(L.ServerFunctionsError("Внутренняя ошибка сервера", err.stack));
   res.status(500).send("<h1>500 - Внутренняя ошибка сервера</h1>");
 });
+
+module.exports.a = app;
