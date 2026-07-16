@@ -10,10 +10,6 @@ const options = {
   cert: fs.readFileSync('путь/к/вашему/fullchain.pem')
 };
 
-app.get('/', (req, res) => {
-  res.send('Привет, это защищенный HTTPS сервер!');
-});
-
 // Создаем и запускаем HTTPS-сервер
 https.createServer(options, app).listen(443, () => {
   console.log('Сервер запущен на https://localhost');

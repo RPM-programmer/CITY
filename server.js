@@ -11,9 +11,8 @@ const os = require("os");
 
 
 // свои (вложенные)
-const BD = require("./module/database.js").b;
-const pb = require("/media/pl/PD/CodeExample/node/progress_ProgressBar/example_progress_ProgressBar.js").c;
-const L = require("./module/sm.js").cm;
+const BD = require(path.resolve("module", "database.js")).b;
+const L = require(path.resolve("module", "sm.js")).cm;
 
 
 // создание сервера на express
@@ -34,6 +33,17 @@ const forAdmin = path.resolve("html", "for_admin.html");
 const mvd = path.resolve("html", "mvd.html");
 const pravo = path.resolve("html", "pravo.html");
 const user = path.resolve("html", "users.html");
+const flag = path.resolve("photo", "flag.png");
+const mvdIcon = path.resolve("photo", "mvd.png");
+const gaiIcon = path.resolve("photo", "GAI.png");
+const policeIcon = path.resolve("photo", "Milicia.png");
+const kgbIcon = path.resolve("photo", "kgbIcon.png");
+const sudIcon = path.resolve("photo", "SUD.png");
+const hospitalIcon = path.resolve("photo", "hospitalIcon.png");
+const mivoIcon = path.resolve("photo", "MIVO.png");
+const psIcon = path.resolve("photo", "psIcon.png");
+const chanelQRcode = path.resolve("photo", "gameChanelQR.png");
+
 
 // функция отправки файла
 async function serveFile(filePath, res) {
@@ -113,31 +123,31 @@ app.get("/", (req, res) => {
   res.redirect("/home");
 });
 app.get("/flag", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/flag.png", res);
+  serveFile(flag, res);
 });
 app.get("/mvd-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/mvd.png", res);
+  serveFile(mvdIcon, res);
 });
 app.get("/gai-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/GAI.png", res);
+  serveFile(gaiIcon, res);
 });
 app.get("/police-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/Milicia.png", res);
+  serveFile(policeIcon, res);
 });
 app.get("/kgb-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/1774362497211.png", res);
+  serveFile(kgbIcon, res);
 });
 app.get("/sud-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/SUD.png", res);
+  serveFile(sudIcon, res);
 });
 app.get("/hospital-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/Pasted image (2).png", res);
+  serveFile(hospitalIcon, res);
 });
 app.get("/mivo-icon", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/MIVO.png", res);
+  serveFile(mivoIcon, res);
 });
 app.get("/ps", async (req, res) => {
-  serveFile("/home/pl/Desktop/CITY/icon/Pasted image.png", res);
+  serveFile(psIcon, res);
 });
 app.get("/home", async (req, res) => {
   res.sendFile(home);

@@ -13,18 +13,15 @@
 - #### cors (npm install --save cors).
 - #### express (npm install --save express).
 - #### express-rate-limit (npm install --save express-rate-limit).
-- #### hbs (npm install --save hbd).
 - #### helmet (npm install --save helmet).
-- #### mysql2 (npm install --save mysql2).
 - #### nodemailer (npm install --save nodemailer).
-- #### pg (npm install --save pg) (postgress).
 - #### progress (npm install --save progress).
 - #### sequelize (npm install --save sequelize).
 - #### sqlite3 (npm install --save sqlite3).
-- #### tedious (npm install --save tedious).
-- #### validator (npm install --save validator).
 
-### Запуск комадой - npm start
+### Запуск отличается в зависимости http или https:
+- #### http - ***node http.js***
+- #### https - ***node https.js***
 ###### Р.П.М
 
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN=localhost"
