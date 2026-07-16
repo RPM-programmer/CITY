@@ -14,16 +14,16 @@
 - #### express (npm install --save express).
 - #### express-rate-limit (npm install --save express-rate-limit).
 - #### helmet (npm install --save helmet).
-- #### nodemailer (npm install --save nodemailer).
 - #### progress (npm install --save progress).
 - #### sequelize (npm install --save sequelize).
 - #### sqlite3 (npm install --save sqlite3).
 
-### Запуск отличается в зависимости http или https:
+### Запуск отличается в зависимости http или https (для запуска перейдите в папку CITY (cd CITY) и введите команду):
 - #### http - ***node http.js***
 - #### https - ***node https.js***
-###### Р.П.М
 
 ### Внимание! Перед запуском на https сервера создайте самоподписанный сертификат! Вот команда (linux ubuntu)(Ввести в /CITY):
 
 - #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN={порт сервера}"***
+
+###### Р.П.М

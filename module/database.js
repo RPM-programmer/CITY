@@ -1,4 +1,3 @@
-const modu = require("./E.js");
 const Sequelize = require("sequelize");
 const SPC = 1310;
 const C = require("./sm").cm;
