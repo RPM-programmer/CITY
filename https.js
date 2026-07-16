@@ -6,8 +6,8 @@ const app = require(path.resolve("server.js"));
 
 // Читаем файлы SSL-сертификата и ключа
 const options = {
-  key: fs.readFileSync('путь/к/вашему/privkey.pem'),
-  cert: fs.readFileSync('путь/к/вашему/fullchain.pem')
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem')
 };
 
 // Создаем и запускаем HTTPS-сервер

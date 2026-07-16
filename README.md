@@ -24,4 +24,6 @@
 - #### https - ***node https.js***
 ###### Р.П.М
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN=localhost"
+### Внимание! Перед запуском на https сервера создайте самоподписанный сертификат! Вот команда (linux ubuntu)(Ввести в /CITY):
+
+- #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN={порт сервера}"***
