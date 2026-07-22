@@ -105,7 +105,7 @@ const limiter = rateLimit({
   },
   legacyHeaders: false
 });
-const whitelist = ['http://localhost:3000', 'http://192.168.0.107:3000'];
+const whitelist = ['http://localhost:3000', 'http://192.168.0.107:3000', 'http://192.168.1.14:3000'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
