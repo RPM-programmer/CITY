@@ -8,8 +8,8 @@ const os = require("os");
 const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const {default:chalk} = require("chalk"); // Исправлено: убрали { default: ... }
-const { Server } = require("socket.io"); // Альтернативный синтаксис для socket.io
+const {default:chalk} = require("chalk");
+const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
@@ -18,12 +18,9 @@ const io = new Server(server);
 // Пример использования (чтобы проверить, что chalk работает)
 console.log(chalk.blue("Сервер запущен!"));
 
-
-
 // свои (вложенные)
 const BD = require(path.resolve("module", "database.js")).b;
 const L = require(path.resolve("module", "sm.js")).cm;
-
 
 // пароли 
 const ADMIN_PASSWORD = '1310'; 
@@ -58,6 +55,7 @@ const chanelQRcode = path.resolve("photo", "gameChanelQR.png");
 
 // функция отправки файла
 async function serveFile(filePath, res) {
+  // MIME типы для файлов
   const mimeTypes = {
     '.html': 'text/html',
     '.js': 'application/javascript',
@@ -69,9 +67,11 @@ async function serveFile(filePath, res) {
     '.json': 'application/json'
   };
 
+  // получение типа файла
   const ext = path.extname(filePath).toLowerCase();
   const contentType = mimeTypes[ext] || 'application/octet-stream';
-
+  
+  // чтение и отправка файла
   try {
     const data = await fs.promises.readFile(filePath);
     res.setHeader('Content-Type', contentType);
@@ -86,7 +86,7 @@ async function serveFile(filePath, res) {
   }
 }
 
-
+// функция логгирования текста
 function requestLogger(req, res, next) {
   const now = new Date();
   const logData = 
@@ -105,6 +105,7 @@ function requestLogger(req, res, next) {
   });
 }
 
+// установка лимита
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 минута
   max: 15,             // Максимум 15 запросов
@@ -116,6 +117,9 @@ const limiter = rateLimit({
   },
   legacyHeaders: false
 });
+
+// настройка политики cors
+// разрешённые сайты (домены)
 const whitelist = ['http://localhost:3000', 'http://192.168.0.107:3000', 'http://192.168.1.14:3000'];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -130,6 +134,8 @@ app.use(cors(corsOptions));
 app.use(limiter);
 app.use(express.urlencoded({ extended: false }));
 app.use(requestLogger);
+
+// сервер
 app.get("/", (req, res) => {
   res.redirect("/home");
 });
@@ -179,7 +185,7 @@ app.get("/api/un", function(req, res){
   res.send(os.userInfo().username);
 });
 
-
+// Socket
 io.on('connection', (socket) => {
   const username = os.userInfo().username;
   console.log(L.SocketInfo(`Пользавотель ${username} присоеденился к чату (socket id: ${socket.id})`))
@@ -223,7 +229,7 @@ io.on('connection', (socket) => {
   });
 });
 
-
+// банк
 app.post("/tm", express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для перевода.");
@@ -432,6 +438,4 @@ app.use((err, req, res, next) => {
   res.status(500).send("<h1>500 - Внутренняя ошибка сервера</h1>");
 });
 
-//module.exports.a = app;
-
-server.listen(3000, "0.0.0.0");
+module.exports.a = app;
