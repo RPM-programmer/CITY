@@ -1,13 +1,23 @@
-// модули
-// скачанные / по умолчанию
-const rateLimit = require("express-rate-limit");
-const process = require("process");
-const { default: chalk } = require("chalk");
-const cors = require("cors");
+// Встроенные модули Node.js (глобальные тоже можно не импортировать)
+const http = require("http");
 const path = require("path");
-const express = require("express");
 const fs = require("fs");
 const os = require("os");
+
+// Сторонние библиотеки
+const express = require("express");
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const {default:chalk} = require("chalk"); // Исправлено: убрали { default: ... }
+const { Server } = require("socket.io"); // Альтернативный синтаксис для socket.io
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Пример использования (чтобы проверить, что chalk работает)
+console.log(chalk.blue("Сервер запущен!"));
+
 
 
 // свои (вложенные)
@@ -15,8 +25,8 @@ const BD = require(path.resolve("module", "database.js")).b;
 const L = require(path.resolve("module", "sm.js")).cm;
 
 
-// создание сервера на express
-const app = express();
+// пароли 
+const ADMIN_PASSWORD = '1310'; 
 
 
 // Константы для лог-файлов
@@ -26,6 +36,7 @@ const ISK_FILE = "SdbOUI.log";
 
 
 // пути для файлов (абсолютные)
+const mesegger = path.resolve("html", "mesegger.html");
 const home = path.resolve("html", "MyCity.html");
 const bank = path.resolve("html", "bank_market.html")
 const admin = path.resolve("html", "admin.html");
@@ -122,6 +133,9 @@ app.use(requestLogger);
 app.get("/", (req, res) => {
   res.redirect("/home");
 });
+app.get("/messager", async (req, res) => {
+  res.sendFile(mesegger)
+});
 app.get("/flag", async (req, res) => {
   serveFile(flag, res);
 });
@@ -164,6 +178,52 @@ app.get("/pravo", async (req, res) => {
 app.get("/api/un", function(req, res){
   res.send(os.userInfo().username);
 });
+
+
+io.on('connection', (socket) => {
+  const username = os.userInfo().username;
+  console.log(L.SocketInfo(`Пользавотель ${username} присоеденился к чату (socket id: ${socket.id})`))
+
+  // 1. Сообщаем всем о новом пользователе (опционально)
+  io.emit('new-user', { username: username });
+
+  // Слушаем сообщения всегда, независимо от статуса админа
+  socket.on('message', (data) => {
+    const msg = data.m;
+    const name = data.n;
+    if (!msg) return;
+    if (socket.rooms.has('admin')) {
+      io.to('admin').emit('message', { n: name, m: msg });
+    } else {
+      io.emit('message', { n: name, m: msg });
+    }
+  });
+
+  // Команда входа в админку
+  socket.on('/adminmode login', (pass) => {
+    if (pass === ADMIN_PASSWORD) {
+      socket.join('admin');
+      console.log(L.SocketEventJoin(username, "admin", socket.id));
+      socket.emit('admin-status', { success: true });
+    } else {
+      socket.emit('admin-status', { success: false, error: 'Неверный пароль' });
+    }
+  });
+  socket.on("/adminmode exit", () => {
+    socket.leave("admin");
+    socket.to("admin").emit('event-leave', { username: username });
+    console.log(L.SocketEventLeave(username, "admin", socket.id))
+  });
+
+  // Обработка выхода
+  socket.on('disconnect', () => {
+    console.log(L.SocketEventLeave(username, "home", socket.id));
+    socket.leave('admin'); // Если был админом, покидаем комнату
+    io.emit('event-leave', { username: username });
+  });
+});
+
+
 app.post("/tm", express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для перевода.");
@@ -372,4 +432,6 @@ app.use((err, req, res, next) => {
   res.status(500).send("<h1>500 - Внутренняя ошибка сервера</h1>");
 });
 
-module.exports.a = app;
+//module.exports.a = app;
+
+server.listen(3000, "0.0.0.0");

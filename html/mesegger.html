@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игровой чат</title>
+    <style>
+        :root {
+            --bg-color: #000a57e5;
+            --chat-bg: #ffffff;
+            --primary: #1f97ffe0;
+            --accent: #00af5d;
+            --text-main: #ffffff;
+            --text-secondary: #646464;
+            --user-color: #007bff;
+            --other-color: #888;
+            --color-of-text-in-button:#e9e3ff;
+            --chat-text-bgcolor:rgba(0, 0, 0, 0.1);
+            --panel-bg-color: #dfe4ea;
+            --text-color: #2f3542;
+            --background-color: lightgreen;
+            --link-color-in-action: blue;
+        }
+        :root[theme='dark'] {
+            --bg-color: black;
+            --chat-bg: #1e1e1e;
+            --primary: #4d1fff;
+            --accent: #00ff88;
+            --text-main: #ffffff;
+            --text-secondary: #aaaaaa;
+            --user-color: #007bff;
+            --other-color: #888;
+            --color-of-text-in-button:#e9e3ff;
+            --panel-bg-color: #2f3542;
+            --text-color: #ced6e0;
+            --link-color-in-action: red;
+            --chat-text-bgcolor:rgba(255, 255, 255, 0.1);
+        }
+        :root[admin ='true'] {
+            --bg-color: black;
+            --chat-bg: #1e1e1e;
+            --primary: #4d1fff;
+            --accent: #00ff88;
+            --text-main: #ffffff;
+            --text-secondary: #aaaaaa;
+            --user-color: #007bff;
+            --other-color: #888;
+            --color-of-text-in-button:green;
+            --panel-bg-color: #2f3542;
+            --text-color: rgb(123, 255, 0);
+            --link-color-in-action: rgb(0, 255, 0);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            gap: 10px;
+        }
+
+        #chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: var(--chat-bg);
+            display: flex;
+            flex-direction: column-reverse;
+            margin-bottom: 20px;
+        }
+
+        .message-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        .meta-info {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .name-badge {
+            background-color: var(--primary);
+            color: black;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .text-content {
+            background-color: var(--chat-text-bgcolor);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 10px;
+            line-height: 1.4;
+        }
+
+        .event-item {
+            background-color: rgba(0, 255, 136, 0.15);
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input#message {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        button#sendButton {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: var(--color-of-text-in-button);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button#sendButton:hover { opacity: 0.9; }
+        * {
+          margin: 0;
+        }
+        div.bar{
+          padding: 1.2rem;
+          background: var(--panel-bg-color);
+          border: 1px solid var(--header-border-color);
+          border-radius: 1cm;
+        }
+        a.bar-link{
+            padding: 1.1rem;
+        }
+        a{text-decoration: none; color: var(--text-color);}
+        a[href]:hover{text-decoration: underline; color: var(--link-color-in-action);}
+    </style>
+</head>
+<body>
+    <div class="bar">
+        <a href="/home" class="bar-link">Главная</a>|
+        <a href="/home#contact" class="bar-link">Контанты</a>|
+        <a href="/home#news" class="bar-link">Новости</a>|
+        <a href="/bank" class="bar-link">Банк</a>|
+        <a href="/mvd" class="bar-link">МВД</a>|
+        <a href="/pravo" class="bar-link">Законы</a>|
+        <a onclick="alert('Здраствуйте! Вас приветствует версия сайта - 4.1')" class="bar-link">Справка</a>|
+        <a href="https://invite.viber.com/?g2=AQBnr2GM2R3us1UlWHuElk9vOri2%2FQZhfi945Na%2Fu%2BXth4LBXxDU97tvyIuZuyRk" class="bar-link" title="Viber">Сообщество</a>|
+        <a href="/messager">Мессенджер</a>|
+        <a href="#themes" class="bar-link" id="toggle-theme">Тема</a>
+    </div>
+
+    <div id="chat-container"></div>
+
+    <div class="input-area">
+        <input id="message" autocomplete="off" placeholder="Введите сообщение..." />
+        <button id="sendButton">Отправить</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.24/ua-parser.min.js"></script>
+        <script>
+            const toggleBtn = document.querySelector("#toggle-theme");
+            const socket = io();
+            const chatContainer = document.getElementById('chat-container');
+            const messageInput = document.getElementById('message');
+            const sendButton = document.getElementById('sendButton');
+            const parser = new UAParser();
+            var myName;
+
+
+            toggleBtn.addEventListener("click", function() {
+              if(document.documentElement.hasAttribute("theme")){
+                document.documentElement.removeAttribute("theme");
+                toggleBtn.value = "Тёмная тема";
+              } else {
+                document.documentElement.setAttribute("theme", "dark");
+                toggleBtn.value = "Светлая тема";
+              }
+            });
+            
+            const result = parser.getResult();
+            async function getUserInfo() {
+              try {
+                const response = await fetch('http://localhost:3000/api/un', {
+                  method: 'GET'
+                });
+
+                if (response.ok) {
+                  const data = await response.text();
+                  myName = data;
+                  console.log("Полученные данные:", data);
+                  if(data.toLowerCase() == "pl" && result.browser.name == "Firefox"){
+                    console.log("Привет Павел!");
+                    document.documentElement.setAttribute("admin", "true");
+                    if(document.documentElement.hasAttribute("theme")){
+                      document.documentElement.removeAttribute("theme");
+                    }
+                  }
+               } else {
+                  console.error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+               }
+            } catch (error) {
+               console.error('Ошибка запроса:', error);
+            }
+        }
+
+        getUserInfo();
+
+        function sendMessage() {
+            const msg = messageInput.value.trim();
+            if(msg){
+                 // проверка строки на команду
+                if(msg == "/adminmode login"){
+                    let password_ = prompt("Введите пароль амина!");
+                    socket.emit("/adminmode login", password_)
+                } else if(msg == "/adminmode exit"){
+                    socket.emit("/adminmode exit");
+                } else {
+                    // Отправляем имя вместе с сообщением, чтобы сервер знал, кто пишет
+                    socket.emit('message', {n: myName, m: msg});
+                    messageInput.value = '';
+                    messageInput.focus();
+                }
+            }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div'); 
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        socket.on('message', function(data) {
+            const item = document.createElement('li');
+            item.className = 'message-item';
+
+            // Определяем, своё ли это сообщение
+            if (myName === data.n) {
+                item.classList.add('user-message');
+            } else {
+                item.classList.add('other-message');
+            }
+
+            const safeName = escapeHtml(data.n);
+            const safeMsg = escapeHtml(data.m);
+
+            item.innerHTML = `
+                <div class="meta-info">От: <span class="name-badge">${safeName}</span></div>
+                <div class="text-content">${safeMsg}</div>
+            `;
+            chatContainer.appendChild(item);
+            scrollToBottom();
+        });
+
+        socket.on('event-leave', function(data) {
+            const username = data.username || 'Пользователь';
+            const item = document.createElement('li');
+            item.className = 'event-item';
+            item.innerHTML = `<span class="event-time">${escapeHtml(username)} покинул чат</span>`;
+            chatContainer.appendChild(item);
+            scrollToBottom();
+        });
+
+        socket.on('admin-status', function(data) {
+            if (data.success) {
+                alert('Вы успешно вошли в режим администратора!');
+            } else {
+                alert('Ошибка входа: ' + (data.error || 'Неверный пароль'));
+            }
+        });
+
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        socket.on('new-user', function(data) {
+            const username = data.username || 'Пользователь';
+            const item = document.createElement('li');
+            item.className = 'event-item';
+            item.innerHTML = `<span class="event-time">${escapeHtml(username)} присоеденился к чату</span>`;
+            chatContainer.appendChild(item);
+            scrollToBottom();
+        });
+    </script>
+</body>
+</html>

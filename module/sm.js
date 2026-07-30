@@ -40,6 +40,26 @@ class Logger {
   static DatabaseFunctionsError(text, error) {
     return `\n ${chalk.blue('SERVER > DATABASE:')} ${chalk.red('@ERROR:')} ${chalk.rgb(255, 165, 0)(text + ' ^error:')} \n ${chalk.red(error)} \n`;
   }
+
+  // Socket info
+  static SocketInfo(text) {
+    return `${chalk.blue('SERVER > SOCKET:')} ${chalk.blue('@info:~')} ${chalk.grey(text)}`;
+  }
+  static SocketWarning(text) {
+    return `${chalk.blue('SERVER > SOCKET:')} ${chalk.yellow('@warning:~')} ${chalk.grey(text)}`;
+  }
+  static SocketFunctionsInfo(text) {
+    return `${chalk.blue('SERVER > SOCKET:')} ${chalk.blue(`@info > ${chalk.grey('#fun-info')}`)} ${chalk.grey(text)}`;
+  }
+  static SocketFunctionsError(text, error) {
+    return `\n ${chalk.blue('SERVER > SOCKET:')} ${chalk.red('@ERROR:')} ${chalk.rgb(255, 165, 0)(text + ' ^error:')} \n ${chalk.red(error)} \n`;
+  }
+  static SocketEventLeave(name, room, id){
+    return `\n ${chalk.blue('SERVER > SOCKET:')} ${chalk.blue('@info >')} ${chalk.grey('#event-leave')} ${chalk.grey(`Пользавотель - ${name}, id - ${id} покинул комнату - ${room}`)}`;
+  }
+  static SocketEventJoin(name, room, id){
+    return `\n ${chalk.blue('SERVER > SOCKET:')} ${chalk.blue('@info >')} ${chalk.grey('#event-join')} ${chalk.grey(`Пользавотель - ${name}, id - ${id} присоеденился к комнате - ${room}`)}`;
+  }
 }
 
 module.exports.cm = Logger;
