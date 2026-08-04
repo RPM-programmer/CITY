@@ -27,6 +27,10 @@ _ru_
 ### Внимание! Перед запуском на https сервера создайте самоподписанный сертификат! Вот команда (linux ubuntu)(Ввести в CITY):
 
 - #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN={порт сервера}"***
+### Windows 11
+- #### ***New-SelfSignedCertificate -DnsName "MyServerName" -CertStoreLocation "cert:\LocalMachine\My"***
+### macos
+- #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/CN=localhost"***
 
 ###### Р.П.М
 
@@ -57,5 +61,9 @@ _en_
 ### Warning! Before launching on an https server, create a self-signed certificate! Here's the command (Linux Ubuntu) (Enter in CITY):
 
 - #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout key.pem -out cert.pem -subj "/CN={server port}"***
+### Windows 11
+- #### ***New-SelfSignedCertificate -DnsName "MyServerName" -CertStoreLocation "cert:\LocalMachine\My"***
+### macos
+- #### ***openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/CN=localhost"***
 
 ###### R.P.M

@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
-const SPC = 1310;
+const process = require("process");
+require('dotenv').config();
+const SPC = 1000;
 const C = require("./sm").cm;
 const sequelize = new Sequelize({
   dialect: "sqlite",
