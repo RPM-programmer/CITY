@@ -16,9 +16,6 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// Пример использования (чтобы проверить, что chalk работает)
-console.log(chalk.blue("Сервер запущен!"));
-
 // свои (вложенные)
 const BD = require(path.resolve("module", "database.js")).b;
 const L = require(path.resolve("module", "sm.js")).cm;
@@ -31,6 +28,7 @@ const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 1000;
 const LOGS_FILE = "SIOUI.log";
 const FINE_FILE = "STPdbOUF.log"; 
 const ISK_FILE = "SdbOUI.log";
+const Chat_log = "chat.log";
 
 
 // пути для файлов (абсолютные)
@@ -393,13 +391,17 @@ io.on('connection', (socket) => {
 
   // Слушаем сообщения всегда, независимо от статуса админа
   socket.on('message', (data) => {
-    const check2 = require("./moderation/moderation.js").moderateText;
     let msg = data.m;
     let name = data.n;
     if (!msg) return;
-    const result = check2(msg);
+    const result = check(msg);
     if(!result.isAllowed){
-      msg = "Текс содержал мат!";
+      msg = "Текст содержал мат!";
+      const data = `\n Пользавотель - ${name} использовал мат - ${result.violations[0].word} \n`;
+      console.log(L.SocketInfo(data))
+      fs.appendFile(Chat_log, data, (err) => {
+        if (err) throw err;
+      });
     }
     
     if (socket.rooms.has('admin')) {
