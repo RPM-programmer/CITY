@@ -60,6 +60,26 @@ class Logger {
   static SocketEventJoin(name, room, id){
     return `\n ${chalk.blue('SERVER > SOCKET:')} ${chalk.blue('@info >')} ${chalk.grey('#event-join')} ${chalk.grey(`Пользавотель - ${name}, id - ${id} присоеденился к комнате - ${room}`)}`;
   }
+  // --- NODEMAILER LOGS ---
+
+  static GBotInfo(text) {
+    return `${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.blue('@info:~')} ${chalk.grey(text)}`;
+  }
+  static GBotWarning(text) {
+    return `${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.yellow('@warning:~')} ${chalk.grey(text)}`;
+  }
+  static GBotFunctionsInfo(text) {
+    return `${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.blue(`@info > ${chalk.grey('#fun-info')}`)} ${chalk.grey(text)}`;
+  }
+  static GBotFunctionsNegativePerformance(text) {
+    return `${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.blue(`@log > ${chalk.underline.grey("fun-log:")}`)} ${chalk.underline.rgb(255, 165, 0)("negative_perfomance")} ${chalk.grey(text)}`;
+  }
+  static GBotFunctionsPositivePerformance(text) {
+    return `${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.blue(`@log > ${chalk.underline.grey("fun-log:")}`)} ${chalk.underline.green("positive_perfomance")} ${chalk.grey(text)}`;
+  }
+  static GBotFunctionsError(text, error) {
+    return `\n ${chalk.blue('SERVER > BOT > GMAIL:')} ${chalk.red('@ERROR:')} ${chalk.rgb(255, 165, 0)(text + ' ^error:')} \n ${chalk.red(error)} \n`;
+  }
 }
 
 module.exports.cm = Logger;

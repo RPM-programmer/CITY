@@ -11,24 +11,28 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const {default:chalk} = require("chalk");
 const { Server } = require("socket.io");
+const { b } = require("./js-module/bank/database.js");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
 // свои (вложенные)
-const BD = require(path.resolve("module", "database.js")).b;
-const L = require(path.resolve("module", "sm.js")).cm;
+const BD = require(path.resolve("js-module","bank", "database.js")).b;
+const L = require(path.resolve("js-module", "log", "sm.js")).cm;
 const check = require(path.resolve("moderation", "moderation.js")).moderateText;
+const G = require(path.resolve("bot", "gmail_bot.js")).G;
+const T = require(path.resolve("js-module", "bank", "tokens.js")).t;
 
 // пароли 
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 1000; 
+var tokens = [];
 
 // Константы для лог-файлов
-const LOGS_FILE = "SIOUI.log";
-const FINE_FILE = "STPdbOUF.log"; 
-const ISK_FILE = "SdbOUI.log";
-const Chat_log = "chat.log";
+const LOGS_FILE = "logs/system/server.log";
+const FINE_FILE = "logs/tp-log/e.log"; 
+const ISK_FILE = "logs/sud-log/SdbOUI.log";
+const Chat_log = "logs/chat-log/chat.log";
 
 
 // пути для файлов (абсолютные)
@@ -119,7 +123,7 @@ const limiter = rateLimit({
 
 // настройка политики cors
 // разрешённые сайты (домены)
-const whitelist = ['http://localhost:3000', 'http://192.168.0.107:3000', 'http://192.168.1.14:3000'];
+const whitelist = ['http://localhost:3000', "https://localhost:3000", 'http://192.168.0.107:3000', "https://192.168.0.107:3000", 'http://192.168.1.14:3000', 'https://192.168.1.14:3000'];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -182,9 +186,54 @@ app.get("/pravo", async (req, res) => {
 app.get("/api/un", function(req, res){
   res.send(os.userInfo().username);
 });
+app.get("/bank/login/:id/:token", function(req, res){
+    const { id, token } = req.params; // Получение данных из URL
+    
+    const index = tokens.indexOf(token);
+    if(index !== -1){
+      tokens.slice(index, 1);
+      try {
+        (async () => {
+          const result = await BD.unblockAccount(id, "1000");
+          if(result){
+          res.send("Личность потверждена! Щёт разблокирован.");
+        } else {
+          res.send("Неизвестная ошибка сервера!");
+        }
+        })();
+      } catch {
+        res.send("Ошибка сервера!");
+      }
+    }else{
+      res.send("Неправильный токен!");
+    }
+});
+app.get("/bank/help/:token", function(req, res){
+  const {token} = req.params; // Получение данных из URL
+    const result =  T.findToken(token);
+    if(result !== null){
+      res.send("Аккаунт подтверждён!");
+    } else {
+      res.send("Аккаунт не подтвержён! (Возможно истекло время подтверждения)");
+    }
+});
+
 
 
 // банк
+app.post("/bank/getNewToken", express.urlencoded({extended: false}), async (req, res) =>{
+  const {id, password} = req.body;
+  const result = await BD.getToken(id, password);
+  if(result.status){
+    res.send("<h1 style='color:blue'>Токет отправлен!</h1><a href='/bank'>В банк...</a>");
+  } else {
+    if(result.statusCode == -1){
+      res.send("<h1 style='color:blue'>Токет не отправлен!</h1><h2>Неправлильнай пароль</h2><a href='/bank'>В банк...</a>");
+    } else if(result.statusCode == 2){
+      res.status(500).send("<h1 style='color:blue'>Токет не отправлен!</h1><h2>Ошибка сервера</h2><a href='/bank'>В банк...</a>");
+    }
+  }
+});
 app.post("/tm", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для перевода.");
@@ -248,22 +297,43 @@ app.post("/b", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось заблокировать аккаунт.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
-app.post("/cba", limiter, express.urlencoded({ extended: false }), async (req, res) => {
-  if (!req.body) {
-    return res.status(400).send("Необходимо предоставить данные для создания аккаунта.");
-  }
-  const { name, password, email } = req.body;
-  try {
-    const result = await BD.creatNew(name, password, email);
-    if (result) {
-      res.send(`<h1>Аккаунт создан успешно!</h1><h2>Имя: ${name}</h2><h2>Email: ${email}</h2><h2>ID: ${result}</h2><a href='/bank'>Вернуться в банк</a>`);
-    } else {
-      res.status(400).send("<h1>Создание аккаунта не удалось!</h1><p>Проверьте введенные данные.</p><a href='/bank'>Вернуться в банк</a>");
+app.post('/cba', limiter, express.urlencoded({ extended: false }), async (req, res) => {
+    if (!req.body) {
+        return res.status(400).send('Необходимо предоставить данные для создания аккаунта.');
     }
-  } catch (error) {
-    console.error("Ошибка при создании нового аккаунта:", error);
-    res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось создать аккаунт.</p><a href='/bank'>Вернуться в банк</a>");
-  }
+    const { name, password, email } = req.body;
+    function et() {
+        let i = 0;
+        let e = '';
+        while (i < 10) {
+            e += Math.floor(Math.random() * 10);
+            i++;
+        }
+        return e;
+    }
+    const fl = et();
+    tokens.push(fl);
+    try {
+        const result = await BD.creatNew(name, password, email);
+        if (result) {
+            await BD.blockAccount(result, "1000");
+            G.GBSendCBA(
+                email, 
+                'Банк', 
+                `Здравствуйте, <b>${name}</b>! Мы заметили, что <span style="color:blue"><i>на ваш gmail адрес был зарегистрирован счет (ID - ${result})</i></span>. В данный момент ваш счет заблокирован, чтобы его разблокировать, подтвердите аккаунт (нажмите на кнопку). Если это не вы: <ul><li>1. Не подтверждайте аккаунт!</li><li>2. Сделайте скриншот экрана.</li><li>3. Напишите в поддержку и отправьте скриншот экрана.</li></ul>`, 
+                fl, 
+                'был зарегистрирован счет на ваш gmail адрес', 
+                name,
+                result
+            );
+            res.send(`<h1>Аккаунт создан успешно!</h1><h2>Имя: ${name}</h2><h2>Email: ${email}</h2><h2>ID: ${result}</h2><a href="/bank">Вернуться в банк</a>`);
+        } else {
+            res.status(400).send('<h1>Создание аккаунта не удалось!</h1><p>Проверьте введенные данные.</p><a href="/bank">Вернуться в банк</a>');
+        }
+    } catch (error) {
+        console.error('Ошибка при создании нового аккаунта:', error);
+        res.status(500).send('<h1>Внутренняя ошибка сервера</h1><p>Не удалось создать аккаунт.</p><a href="/bank">Вернуться в банк</a>');
+    }
 });
 app.post("/j", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
@@ -384,31 +454,53 @@ app.post("/wf", limiter, express.urlencoded({ extended: false }), (req, res) => 
 // Socket
 io.on('connection', (socket) => {
   const username = os.userInfo().username;
-  console.log(L.SocketInfo(`Пользавотель ${username} присоеденился к чату (socket id: ${socket.id})`))
+  console.log(L.SocketInfo(`Пользователь ${username} присоединился к чату (socket id: ${socket.id})`));
+  
+  const loginTime = new Date();
+  const data1 = `\n\n[${loginTime.toISOString()}]\n Пользователь - ${username}\n присоединился к чату\n --------------------\n`;
+  
+  fs.appendFile(Chat_log, data1, (error) => {
+    if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
+    else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
+  });
 
-  // 1. Сообщаем всем о новом пользователе (опционально)
+  // Сообщаем всем о новом пользователе
   io.emit('new-user', { username: username });
 
-  // Слушаем сообщения всегда, независимо от статуса админа
+  // Слушаем сообщения всегда
   socket.on('message', (data) => {
     let msg = data.m;
-    let name = data.n;
+    let name = data.n || username; // Фолбек на username, если n не передано
     if (!msg) return;
+
+    const messageTime = new Date();
     const result = check(msg);
-    if(!result.isAllowed){
+
+    if (!result.isAllowed) {
       msg = "Текст содержал мат!";
-      const data = `\n Пользавотель - ${name} использовал мат - ${result.violations[0].word} \n`;
-      console.log(L.SocketInfo(data))
-      fs.appendFile(Chat_log, data, (err) => {
-        if (err) throw err;
+      const badWord = result.violations[0]?.word || "неизвестно";
+      const data2 = `\n[${messageTime.toISOString()}]\n Пользователь - ${name} использовал мат - ${badWord} \n --------------------\n`;
+      
+      console.log(L.SocketInfo(data));
+      fs.appendFile(Chat_log, data2, (err) => {
+        if (err) console.log(L.ServerFunctionsError("ошибка записи в лог файл", err));
+        else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
       });
     }
     
+    // Отправка сообщений по комнатам
     if (socket.rooms.has('admin')) {
       io.to('admin').emit('message', { n: name, m: msg });
     } else {
       io.emit('message', { n: name, m: msg });
     }
+
+    const data3 = `\n\n[${messageTime.toISOString()}]\n Пользователь - ${name}\n написал сообщение - ${msg}\n --------------------\n`;
+    
+    fs.appendFile(Chat_log, data3, (error) => {
+      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
+      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
+    });
   });
 
   // Команда входа в админку
@@ -417,23 +509,50 @@ io.on('connection', (socket) => {
       socket.join('admin');
       console.log(L.SocketEventJoin(username, "admin", socket.id));
       socket.emit('admin-status', { success: true });
+
+      const adminLoginTime = new Date();
+      const data4 = `\n\n[${adminLoginTime.toISOString()}]\n Пользователь - ${username}\n присоединился к чату админов\n --------------------\n`;
+      
+      fs.appendFile(Chat_log, data4, (error) => {
+        if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
+        else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
+      });
     } else {
       socket.emit('admin-status', { success: false, error: 'Неверный пароль' });
     }
   });
+
+  // Команда выхода из админки
   socket.on("/adminmode exit", () => {
     socket.leave("admin");
     socket.to("admin").emit('event-leave', { username: username });
-    console.log(L.SocketEventLeave(username, "admin", socket.id))
+    console.log(L.SocketEventLeave(username, "admin", socket.id));
+
+    const adminExitTime = new Date();
+    const data5 = `\n\n[${adminExitTime.toISOString()}]\n Пользователь - ${username}\n вышел из чата админа\n --------------------\n`;
+    
+    fs.appendFile(Chat_log, data5, (error) => {
+      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
+      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
+    });
   });
 
-  // Обработка выхода
+  // Обработка отключения
   socket.on('disconnect', () => {
     console.log(L.SocketEventLeave(username, "home", socket.id));
-    socket.leave('admin'); // Если был админом, покидаем комнату
+    socket.leave('admin'); 
     io.emit('event-leave', { username: username });
+
+    const disconnectTime = new Date();
+    const data6 = `\n\n[${disconnectTime.toISOString()}]\n Пользователь - ${username}\n вышел из чата\n --------------------\n`;
+    
+    fs.appendFile(Chat_log, data6, (error) => {
+      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
+      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
+    });
   });
 });
+
 
 
 // Обработчик для несуществующих маршрутов

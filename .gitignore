@@ -3,3 +3,14 @@
 *.db
 
 .env
+
+test.js
+
+console.js
+
+cert.pem
+key.pem
+
+test/
+
+dbBT.js

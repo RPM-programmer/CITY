@@ -1,11 +1,14 @@
 const Sequelize = require("sequelize");
+const path = require("path");
 const process = require("process");
 require('dotenv').config();
 const SPC = 1000;
-const C = require("./sm").cm;
+const C = require(path.resolve("js-module", "log", "sm.js")).cm;
+const G = require(path.resolve("bot", "gmail_bot.js")).G;
+const T = require("./tokens.js").t;
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "bank.db", 
+  storage: "logs/bank-log/bank.db", 
   logging: false 
 });
 const BU = sequelize.define("BU", {
@@ -14,23 +17,33 @@ const BU = sequelize.define("BU", {
   password: { type: Sequelize.STRING, allowNull: false, unique: true },
   email: { type: Sequelize.STRING, allowNull: false },
   ma: { type: Sequelize.FLOAT, allowNull: false, defaultValue: 0 },
-  isActive: { type: Sequelize.BOOLEAN, defaultValue: true, allowNull: false }
+  isActive: { type: Sequelize.BOOLEAN, defaultValue: true, allowNull: false },
+  key:{type: Sequelize.STRING, allowNull: false}
 });
 sequelize.sync().then(result => {
   console.log(C.DatabaseInfo("Таблица счетов банка успешно синхронизирована."));
 }).catch(err => console.log(C.DatabaseFunctionsError(`Ошибка синхронизации: ${err}`)));
 
+function f() {
+  let key = '';
+  for (let i = 0; i < 10; i++) {
+    key += Math.floor(Math.random() * 10);
+  }
+  return key;
+}
 
 class BC {
   static async creatNew(name_, password_, email_) {
     console.log(C.DatabaseFunctionsInfo(`Создание пользователя: имя=${name_}, email=${email_}`));
     try {
+      var key_ = f();
       const newUser = await BU.create({
         name: name_,
         password: password_,
         email: email_,
         ma: 0,
-        isActive: true 
+        isActive: true,
+        key: key_.toString(),
       });
       console.log(C.DatabaseInfo("Новый пользователь создан:"), {
         id: newUser.id,
@@ -95,6 +108,7 @@ class BC {
       }
       user.ma += amount;
       await user.save();
+      await G.GBSendAS(user.email, "Bank", "add", user.name, user.id, amount);
       console.log(C.DatabaseFunctionsPositivePerformance(`Успешно добавлено ${amount} на счет пользователя ${id_}. Новый баланс: ${user.ma}`));
       return true;
     } catch (err) {
@@ -128,6 +142,7 @@ class BC {
       }
       user.ma -= amount; 
       await user.save();
+      await G.GBSendAS(user.email, "Bank", "--", user.name, user.id, amount);
       console.log(C.DatabaseFunctionsPositivePerformance(`Успешно списано ${amount} со счета пользователя ${id_}. Новый баланс: ${user.ma}`));
       return true;
     } catch (err) {
@@ -136,15 +151,19 @@ class BC {
     }
   }
   static async transferManny(fromId, toId, amount, password_) {
+    const newKey = f().toString();
     console.log(C.DatabaseFunctionsInfo(`Перевод: От ${fromId} к ${toId}, Сумма ${amount}`));
+    
     if (amount <= 0) {
       console.log(C.DatabaseFunctionsNegativePerformance("Сумма перевода должна быть положительной."));
       return {t:false, c:1};
     }
+    
     const transaction = await sequelize.transaction();
     try {
       const sender = await BU.findByPk(fromId, { transaction });
       const receiver = await BU.findByPk(toId, { transaction });
+      
       if (!sender || !receiver) {
         console.log(C.DatabaseFunctionsNegativePerformance("Один из пользователей не найден. Перевод отменен."));
         await transaction.rollback();
@@ -165,25 +184,49 @@ class BC {
         await transaction.rollback();
         return {t:false, c:4};
       }
+      
       const senderPassword = sender.password;
       if (senderPassword !== password_) {
         console.log(C.DatabaseFunctionsNegativePerformance(`Неправильный пароль отправителя (${fromId}). Транзакция отменена.`));
         await transaction.rollback();
         return {t:false, c:1};
       }
+      
       sender.ma -= amount;
       receiver.ma += amount;
+      
+      // ИСПРАВЛЕНО: Добавлены скобки к Math.random()
+      const veri = Math.round(Math.random() * 4);
+      if(veri == 0){
+        sender.key = newKey;
+      }
+      
+      const Token = "";
       await sender.save({ transaction });
       await receiver.save({ transaction });
+      
       await transaction.commit();
+      try {
+        const secureToken = T.newToken(receiver.id, sender.id, amount);
+        G.GBSendTM(sender.email, receiver.id, sender.id, secureToken, receiver.email, amount);
+        G.GBSendAS(receiver.email, "Bank", "add", receiver.name || receiver.email, receiver.id, amount);
+      } catch (mailError) {
+        console.error(C.DatabaseFunctionsError("Перевод выполнен успешно, но отправка токена/писем завершилась сбоем:", mailError.message));
+      }
+      
       console.log(C.DatabaseFunctionsPositivePerformance(`Успешный перевод: ${amount} с ID ${fromId} на ID ${toId}.`));
       return {t:true, c:0};
     } catch (err) {
-      console.error(C.DatabaseFunctionsError("Ошибка при переводе средств:", err.message));
-      await transaction.rollback();
+      console.error(C.DatabaseFunctionsError("Ошибка при переводе средств:", err.message + "\n" + err));
+      
+      if (!transaction.finished) {
+        await transaction.rollback();
+      }
+      
       return {t:false, c:-1};
     }
   }
+
   static async deleteAccount(id_, password_) {
     console.log(C.DatabaseFunctionsInfo(`Удаление аккаунта: ID=${id_}`));
     try {
@@ -198,6 +241,7 @@ class BC {
       }
       const numDeleted = await BU.destroy({where: { id: id_ }});
       if (numDeleted > 0) {
+        await G.GBSendAS(user.email, "Bank", "delete", user.name, user.id);
         console.log(C.DatabaseFunctionsPositivePerformance(`Аккаунт пользователя с ID ${id_} успешно удален.`));
         return true;
       } else {
@@ -227,6 +271,7 @@ class BC {
       }
       user.isActive = false;
       await user.save();
+      await G.GBSendAS(user.email, "Bank", "block", user.name, user.id);
       console.log(C.DatabaseFunctionsPositivePerformance(`Аккаунт пользователя с ID ${id_} успешно заблокирован.`));
       return true;
     } catch (err) {
@@ -249,6 +294,7 @@ class BC {
         }
         user.isActive = true;
         await user.save();
+        await G.GBSendAS(user.email, "Bank", "unblock", user.name, id_, "")
         console.log(C.DatabaseFunctionsPositivePerformance(`Аккаунт пользователя с ID ${id_} успешно разблокирован.`));
         return true;
       } else {
@@ -258,6 +304,20 @@ class BC {
     } catch (err) {
       console.error(C.DatabaseFunctionsError("Ошибка при разблокировке аккаунта:", err.message));
       return false;
+    }
+  }
+  static async getToken(id, password){
+    try {
+      const user = await BU.findByPk(id);
+      if(user.password !== password){
+        return {status:false, token:null, statusCode:-1 /* (неправильный пароль) */}
+      }
+      const userKey = user.key;
+      const g = require("../../bot/gmail_bot.js").G;
+      await g.GBSendGT(user.email, userKey);
+      return {status:true, token:userKey, statusCode:1}
+    } catch {
+      return {status:false, token:null, statusCode:2}
     }
   }
 }

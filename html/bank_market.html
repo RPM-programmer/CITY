@@ -80,6 +80,7 @@
             <a href="/pravo" class="bar-link">Законы</a>|
             <a onclick="alert('Здраствуйте! Вас приветствует версия сайта - 4.1')" class="bar-link">Справка</a>|
             <a href="https://invite.viber.com/?g2=AQBnr2GM2R3us1UlWHuElk9vOri2%2FQZhfi945Na%2Fu%2BXth4LBXxDU97tvyIuZuyRk" class="bar-link" title="Viber">Сообщество</a>|
+            <a href="/messager">Мессенджер</a>|
             <a href="#themes" class="bar-link">Тема</a>
     </div>
     <div class="bar">
@@ -142,7 +143,7 @@
         </div>
         <!--группа по линии 2-->
         <div class="row think">
-            <form action="/tm" method="post" autocomplete="off">
+            <form action="/tm" method="post">
             <h3><a name="tranfer">перевод</a></h3>
             <p>
                 <label>перевести с (ID):</label><br/>
@@ -154,13 +155,13 @@
             </p>
             <p>
                 <label>перевести (средсва):</label><br/>
-                <input type="number" name="manny">
+                <input type="number" name="manny" id="manny">
             </p>
             <p>
                 <label>пароль:</label><br/>
                 <input type="password" name="password"><br/>
             </p>
-            <input type="submit" value="Отправить" />
+            <input type="submit" value="Отправить" id="sumbit"/>
             <input type="reset" value="Отчистить"/>
         </form>
         <form action="/cba" method="post" autocomplete="off">
