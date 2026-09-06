@@ -1,49 +1,30 @@
-// Встроенные модули Node.js (глобальные тоже можно не импортировать)
-const http = require("http");
+// Встроенные библиотеки
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
+
 
 // Сторонние библиотеки
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
-const {default:chalk} = require("chalk");
-const { Server } = require("socket.io");
-const { b } = require("./js-module/bank/database.js");
+const chalk = require("chalk-palette"); 
+const logger = require("custom-color-logs");
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
 
 // свои (вложенные)
-const BD = require(path.resolve("js-module","bank", "database.js")).b;
-const L = require(path.resolve("js-module", "log", "sm.js")).cm;
-const check = require(path.resolve("moderation", "moderation.js")).moderateText;
-const G = require(path.resolve("bot", "gmail_bot.js")).G;
-const T = require(path.resolve("js-module", "bank", "tokens.js")).t;
-
-// пароли 
-const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 1000; 
-var tokens = [];
-
-// Константы для лог-файлов
-const LOGS_FILE = "logs/system/server.log";
-const FINE_FILE = "logs/tp-log/e.log"; 
-const ISK_FILE = "logs/sud-log/SdbOUI.log";
-const Chat_log = "logs/chat-log/chat.log";
+const BANK = require(path.resolve("js-module","bank", "database.js"));
+const GMAIL = require(path.resolve("bot", "gmail_bot.js")).G;
+const TOKENS = require(path.resolve("js-module", "bank", "tokens.js")).t;
 
 
-// пути для файлов (абсолютные)
+// Файлы (html, png, etc.)
 const mesegger = path.resolve("html", "mesegger.html");
 const home = path.resolve("html", "MyCity.html");
 const bank = path.resolve("html", "bank_market.html")
-const admin = path.resolve("html", "admin.html");
-const forAdmin = path.resolve("html", "for_admin.html");
 const mvd = path.resolve("html", "mvd.html");
 const pravo = path.resolve("html", "pravo.html");
-const user = path.resolve("html", "users.html");
 const flag = path.resolve("photo", "flag.png");
 const mvdIcon = path.resolve("photo", "mvd.png");
 const gaiIcon = path.resolve("photo", "GAI.png");
@@ -56,7 +37,17 @@ const psIcon = path.resolve("photo", "psIcon.png");
 const chanelQRcode = path.resolve("photo", "gameChanelQR.png");
 
 
-// функция отправки файла
+// Пути для лог-файлов
+const LOGS_FILE = "logs/system/server.log";
+const FINE_FILE = "logs/tp-log/fine.log"; 
+const ISK_FILE = "logs/sud-log/isk.log";
+
+
+// Временные данные
+var tokens = [];
+
+
+// Функция отправки файлов
 async function serveFile(filePath, res) {
   // MIME типы для файлов
   const mimeTypes = {
@@ -89,6 +80,15 @@ async function serveFile(filePath, res) {
   }
 }
 
+
+// логируем то что модули загружены
+
+
+// создание сервера
+const app = express();
+
+
+// Настройка сервера
 // функция логгирования текста
 function requestLogger(req, res, next) {
   const now = new Date();
@@ -107,8 +107,7 @@ function requestLogger(req, res, next) {
     next();
   });
 }
-
-// установка лимита
+// установка лимита запросов в банк
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 минута
   max: 15,             // Максимум 15 запросов
@@ -120,9 +119,7 @@ const limiter = rateLimit({
   },
   legacyHeaders: false
 });
-
 // настройка политики cors
-// разрешённые сайты (домены)
 const whitelist = ['http://localhost:3000', "https://localhost:3000", 'http://192.168.0.107:3000', "https://192.168.0.107:3000", 'http://192.168.1.14:3000', 'https://192.168.1.14:3000'];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -133,59 +130,109 @@ const corsOptions = {
     }
   }
 };
+// установка настроек на сервер
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(requestLogger);
 
-// сервер
+
+// ############################################################
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ------------------- роутер (сервер) ------------------------
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ############################################################
+
+
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ------------------------ GET -------------------------------
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+// ============================================================
+// ---------------------- Рэдиректы ---------------------------
+// ============================================================
+// корень -> /home
 app.get("/", (req, res) => {
   res.redirect("/home");
 });
-app.get("/messager", async (req, res) => {
-  res.sendFile(mesegger)
-});
-app.get("/flag", async (req, res) => {
-  serveFile(flag, res);
-});
-app.get("/mvd-icon", async (req, res) => {
-  serveFile(mvdIcon, res);
-});
-app.get("/gai-icon", async (req, res) => {
-  serveFile(gaiIcon, res);
-});
-app.get("/police-icon", async (req, res) => {
-  serveFile(policeIcon, res);
-});
-app.get("/kgb-icon", async (req, res) => {
-  serveFile(kgbIcon, res);
-});
-app.get("/sud-icon", async (req, res) => {
-  serveFile(sudIcon, res);
-});
-app.get("/hospital-icon", async (req, res) => {
-  serveFile(hospitalIcon, res);
-});
-app.get("/mivo-icon", async (req, res) => {
-  serveFile(mivoIcon, res);
-});
-app.get("/ps", async (req, res) => {
-  serveFile(psIcon, res);
-});
+
+
+// ============================================================
+// ---------------------- Веб-страницы ------------------------
+// ============================================================
+// главная страница
 app.get("/home", async (req, res) => {
   res.sendFile(home);
 });
+// страница банка
 app.get("/bank", async (req, res) => {
   res.sendFile(bank);
 });
+// страница мвд
 app.get("/mvd", async (req, res) => {
   res.sendFile(mvd);
 });
+// страница конституции
 app.get("/pravo", async (req, res) => {
   res.sendFile(pravo);
 });
-app.get("/api/un", function(req, res){
-  res.send(os.userInfo().username);
+// Мессенджер
+app.get("/messager", async (req, res) => {
+  res.sendFile(mesegger)
 });
+
+
+// ============================================================
+// ---------------------- Изображения -------------------------
+// ============================================================
+// флаг
+app.get("/flag", async (req, res) => {
+  serveFile(flag, res);
+});
+// иконка mvd
+app.get("/mvd-icon", async (req, res) => {
+  serveFile(mvdIcon, res);
+});
+// иконка гаи
+app.get("/gai-icon", async (req, res) => {
+  serveFile(gaiIcon, res);
+});
+// иконка милиции
+app.get("/police-icon", async (req, res) => {
+  serveFile(policeIcon, res);
+});
+// иконка kgb
+app.get("/kgb-icon", async (req, res) => {
+  serveFile(kgbIcon, res);
+});
+// иконка суда
+app.get("/sud-icon", async (req, res) => {
+  serveFile(sudIcon, res);
+});
+// иконка mбольницы
+app.get("/hospital-icon", async (req, res) => {
+  serveFile(hospitalIcon, res);
+});
+// иконка mivo
+app.get("/mivo-icon", async (req, res) => {
+  serveFile(mivoIcon, res);
+});
+// иконка пограничной службы
+app.get("/ps", async (req, res) => {
+  serveFile(psIcon, res);
+});
+
+
+// ============================================================
+// ------------------------- API ------------------------------
+// ============================================================
+// Подтверждение создания аккаунта в банке
 app.get("/bank/login/:id/:token", function(req, res){
     const { id, token } = req.params; // Получение данных из URL
     
@@ -208,6 +255,7 @@ app.get("/bank/login/:id/:token", function(req, res){
       res.send("Неправильный токен!");
     }
 });
+// Подверждения перевода в Банке
 app.get("/bank/help/:token", function(req, res){
   const {token} = req.params; // Получение данных из URL
     const result =  T.findToken(token);
@@ -219,21 +267,19 @@ app.get("/bank/help/:token", function(req, res){
 });
 
 
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ------------------------ POST ------------------------------
+// ------------------------------------------------------------
+// ------------------------------------------------------------
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-// банк
-app.post("/bank/getNewToken", express.urlencoded({extended: false}), async (req, res) =>{
-  const {id, password} = req.body;
-  const result = await BD.getToken(id, password);
-  if(result.status){
-    res.send("<h1 style='color:blue'>Токет отправлен!</h1><a href='/bank'>В банк...</a>");
-  } else {
-    if(result.statusCode == -1){
-      res.send("<h1 style='color:blue'>Токет не отправлен!</h1><h2>Неправлильнай пароль</h2><a href='/bank'>В банк...</a>");
-    } else if(result.statusCode == 2){
-      res.status(500).send("<h1 style='color:blue'>Токет не отправлен!</h1><h2>Ошибка сервера</h2><a href='/bank'>В банк...</a>");
-    }
-  }
-});
+
+// ============================================================
+// ------------------------- Банк -----------------------------
+// ============================================================
+// Перевод денег
 app.post("/tm", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для перевода.");
@@ -262,6 +308,7 @@ app.post("/tm", limiter, express.urlencoded({ extended: false }), async (req, re
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось выполнить перевод.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Удаление щёта
 app.post("/d", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для удаления.");
@@ -280,6 +327,7 @@ app.post("/d", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось удалить аккаунт.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Блокирование щёта
 app.post("/b", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для блокировки.");
@@ -297,6 +345,7 @@ app.post("/b", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось заблокировать аккаунт.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Создание щёта
 app.post('/cba', limiter, express.urlencoded({ extended: false }), async (req, res) => {
     if (!req.body) {
         return res.status(400).send('Необходимо предоставить данные для создания аккаунта.');
@@ -335,6 +384,7 @@ app.post('/cba', limiter, express.urlencoded({ extended: false }), async (req, r
         res.status(500).send('<h1>Внутренняя ошибка сервера</h1><p>Не удалось создать аккаунт.</p><a href="/bank">Вернуться в банк</a>');
     }
 });
+// Получение баланса
 app.post("/j", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для поиска баланса.");
@@ -352,6 +402,7 @@ app.post("/j", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось найти баланс.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Разблокировка щёта
 app.post("/ub", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для разблокировки.");
@@ -369,6 +420,7 @@ app.post("/ub", limiter, express.urlencoded({ extended: false }), async (req, re
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось разблокировать аккаунт.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Уменьшение средств
 app.post("/s", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для списания.");
@@ -386,6 +438,7 @@ app.post("/s", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось списать средства.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+// Добавление средств
 app.post("/a", limiter, express.urlencoded({ extended: false }), async (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для добавления средств.");
@@ -403,6 +456,14 @@ app.post("/a", limiter, express.urlencoded({ extended: false }), async (req, res
     res.status(500).send("<h1>Внутренняя ошибка сервера</h1><p>Не удалось добавить средства.</p><a href='/bank'>Вернуться в банк</a>");
   }
 });
+
+
+// ============================================================
+// ------------------------- МВД ------------------------------
+// ============================================================
+
+
+// подать иск
 app.post("/si", limiter, express.urlencoded({ extended: false }), (req, res) => {
   if (!req.body) {
     return res.status(400).send("Необходимо предоставить данные для искового заявления.");
@@ -426,6 +487,7 @@ app.post("/si", limiter, express.urlencoded({ extended: false }), (req, res) => 
     res.redirect("/mvd");
   });
 });
+// выписать штраф
 app.post("/wf", limiter, express.urlencoded({ extended: false }), (req, res) => {
     if(!req.body) {
         return res.status(400).send("Необходимо предоставить данные для штрафа.");
@@ -451,110 +513,13 @@ app.post("/wf", limiter, express.urlencoded({ extended: false }), (req, res) => 
         res.status(401).send("<h1>Доступ запрещен!</h1><p>Неверный пароль для записи информации о штрафах.</p><a href='/mvd'>Вернуться</a>");
     }
 });
-// Socket
-io.on('connection', (socket) => {
-  const username = os.userInfo().username;
-  console.log(L.SocketInfo(`Пользователь ${username} присоединился к чату (socket id: ${socket.id})`));
-  
-  const loginTime = new Date();
-  const data1 = `\n\n[${loginTime.toISOString()}]\n Пользователь - ${username}\n присоединился к чату\n --------------------\n`;
-  
-  fs.appendFile(Chat_log, data1, (error) => {
-    if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
-    else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-  });
-
-  // Сообщаем всем о новом пользователе
-  io.emit('new-user', { username: username });
-
-  // Слушаем сообщения всегда
-  socket.on('message', (data) => {
-    let msg = data.m;
-    let name = data.n || username; // Фолбек на username, если n не передано
-    if (!msg) return;
-
-    const messageTime = new Date();
-    const result = check(msg);
-
-    if (!result.isAllowed) {
-      msg = "Текст содержал мат!";
-      const badWord = result.violations[0]?.word || "неизвестно";
-      const data2 = `\n[${messageTime.toISOString()}]\n Пользователь - ${name} использовал мат - ${badWord} \n --------------------\n`;
-      
-      console.log(L.SocketInfo(data));
-      fs.appendFile(Chat_log, data2, (err) => {
-        if (err) console.log(L.ServerFunctionsError("ошибка записи в лог файл", err));
-        else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-      });
-    }
-    
-    // Отправка сообщений по комнатам
-    if (socket.rooms.has('admin')) {
-      io.to('admin').emit('message', { n: name, m: msg });
-    } else {
-      io.emit('message', { n: name, m: msg });
-    }
-
-    const data3 = `\n\n[${messageTime.toISOString()}]\n Пользователь - ${name}\n написал сообщение - ${msg}\n --------------------\n`;
-    
-    fs.appendFile(Chat_log, data3, (error) => {
-      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
-      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-    });
-  });
-
-  // Команда входа в админку
-  socket.on('/adminmode login', (pass) => {
-    if (pass === ADMIN_PASSWORD) {
-      socket.join('admin');
-      console.log(L.SocketEventJoin(username, "admin", socket.id));
-      socket.emit('admin-status', { success: true });
-
-      const adminLoginTime = new Date();
-      const data4 = `\n\n[${adminLoginTime.toISOString()}]\n Пользователь - ${username}\n присоединился к чату админов\n --------------------\n`;
-      
-      fs.appendFile(Chat_log, data4, (error) => {
-        if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
-        else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-      });
-    } else {
-      socket.emit('admin-status', { success: false, error: 'Неверный пароль' });
-    }
-  });
-
-  // Команда выхода из админки
-  socket.on("/adminmode exit", () => {
-    socket.leave("admin");
-    socket.to("admin").emit('event-leave', { username: username });
-    console.log(L.SocketEventLeave(username, "admin", socket.id));
-
-    const adminExitTime = new Date();
-    const data5 = `\n\n[${adminExitTime.toISOString()}]\n Пользователь - ${username}\n вышел из чата админа\n --------------------\n`;
-    
-    fs.appendFile(Chat_log, data5, (error) => {
-      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
-      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-    });
-  });
-
-  // Обработка отключения
-  socket.on('disconnect', () => {
-    console.log(L.SocketEventLeave(username, "home", socket.id));
-    socket.leave('admin'); 
-    io.emit('event-leave', { username: username });
-
-    const disconnectTime = new Date();
-    const data6 = `\n\n[${disconnectTime.toISOString()}]\n Пользователь - ${username}\n вышел из чата\n --------------------\n`;
-    
-    fs.appendFile(Chat_log, data6, (error) => {
-      if (error) console.log(L.ServerFunctionsError("ошибка записи в лог файл", error));
-      else console.log(L.ServerFunctionsPositivePerformance("Запись в файл завершена"));
-    });
-  });
-});
 
 
 
+
+
+
+// Настройка необработанных запросов
 // Обработчик для несуществующих маршрутов
 app.use((req, res) => {
   res.status(404).send("<h1>404 - Страница не найдена</h1>");
@@ -566,8 +531,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("<h1>500 - Внутренняя ошибка сервера</h1>");
 });
 
-// В конце server.js
+
 module.exports = {
-  app: app,
-  server: server // Обязательно экспортируем server!
+  app: app
 };

@@ -32,7 +32,7 @@ function f() {
   return key;
 }
 
-class BC {
+class BANK {
   static async creatNew(name_, password_, email_) {
     console.log(C.DatabaseFunctionsInfo(`Создание пользователя: имя=${name_}, email=${email_}`));
     try {
@@ -322,4 +322,4 @@ class BC {
   }
 }
 
-module.exports.b = BC;
+module.exports = BANK

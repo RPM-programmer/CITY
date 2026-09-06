@@ -1,9 +1,14 @@
 // Файл запуска (например, index.js или start.js)
 const path = require("path");
-const { app, server } = require(path.resolve("server.js")); // Нам нужны оба объекта!
+const http = require("http");
+const {app} = require(path.resolve("server.js")); // Нам нужны оба объекта!
 const process = require("process");
 require("dotenv").config();
 const L = require(path.resolve("js-module", "log", "sm.js")).cm;
+const server = http.createServer(app);
+const io = new Server(server);
+const chat = require("./chat/chat.js").http;
+chat(io);
 
 const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || "0.0.0.0";

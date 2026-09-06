@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://images.icon-icons.com/300/PNG/256/bank-icon_31875.png" type="image/x-icon">
+    <title>City's Bank — Личный кабинет</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --panel-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --primary-color: #0056b3;
+            --primary-hover: #004085;
+            --accent-color: #e6f0fa;
+            --border-color: #dbe2ea;
+            --danger-color: #dc3545;
+            --danger-hover: #bd2130;
+            --success-color: #28a745;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --radius: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent-color: #1e293b;
+            --border-color: #334155;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+            background-color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--accent-color);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .instructions {
+            background-color: var(--accent-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+        }
+
+        .instructions h2 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 15px;
+            color: var(--primary-color);
+        }
+
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+            text-transform: capitalize;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--accent-color);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .policy-section {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .policy-section h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .policy-block {
+            margin-bottom: 20px;
+        }
+
+        .policy-block h4 {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            color: var(--text-color);
+        }
+
+        .policy-block p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav ul {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">City's Bank</a>
+            <nav>
+                <ul>
+                    <li><a href="/home">Главная</a></li>
+                    <li><a href="/home">Контакты</a></li>
+                    <li><a href="/home">Новости</a></li>
+                    <li><a href="/bank" class="active">Банк</a></li>
+                    <li><a href="/mvd">МВД</a></li>
+                    <li><a href="/pravo">Законы</a></li>
+                    <li><a href="#">Справка</a></li>
+                    <li><a href="#">Сообщество</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeBtn">Тёмная тема</button>
+            <button class="theme-toggle" id="for-admin-login">Для персонала</button>
+            <script>
+                (async () => {
+    // Получаем кнопку переключения темы или входа для персонала
+    const button = document.getElementById("for-admin-login");
+    
+    if (!button) {
+        console.error("Кнопка 'for-admin-login' не найдена на странице.");
+        return;
+    }
+
+    // Делаем функцию-обработчик клика асинхронной (async)
+    button.addEventListener("click", async () => {
+        const areYouWantToLogin = confirm("Вы действительно хотите войти в админ-панель?");
+        
+        if (areYouWantToLogin) {
+            const loginPassword = prompt("Введите пароль администратора:");
+            
+            // Если пользователь нажал «Отмена» в prompt или ничего не ввёл
+            if (!loginPassword) return;
+
+            try {
+                // Запрашиваем правильный пароль с сервера авторизации игры
+                // ЗАМЕНИТЕ '/api/get-admin-password' на ваш реальный URL
+                const response = await fetch("/api/get-admin-password"); 
+                
+                if (!response.ok) {
+                    throw new Error("Ошибка при запросе к серверу");
+                }
+
+                const truePassword = await response.text(); // Получаем пароль как текст
+
+                // Сверяем введенный пароль с полученным от сервера
+                if (loginPassword.trim() === truePassword.trim()) {
+                    alert("Доступ для персонала разрешен!");
+                    
+                    // Здесь ваш код: например, показать блок "Для персонала"
+                    // document.querySelector(".staff-zone").style.display = "block";
+                } else {
+                    alert("Неверный пароль администратора!");
+                }
+
+            } catch (error) {
+                console.error("Не удалось проверить пароль:", error);
+                alert("Произошла ошибка при проверке. Попробуйте позже.");
+            }
+        } 
+    });
+})();
+
+            </script>
+        </div>
+    </header>
+
+    <main>
+        <section class="instructions">
+            <h2>Как использовать?</h2>
+            <p>Для совершения банковских операций заполните все обязательные поля соответствующей формы и нажмите кнопку <strong>«Отправить»</strong>.</p>
+            <p style="margin-top: 8px; font-size: 0.9rem; color: var(--text-muted);">
+                - <strong>ID</strong> — уникальный номер счета для доступа к средствам. Не забывайте его! При утере ID доступ к деньгам восстановить невозможно.<br>
+                - <strong>Имя, Почта, Пароль</strong> — используются для создания нового аккаунта. Имя заполняется латиницей, почта — адрес Gmail.
+            </p>
+        </section>
+
+        <div class="grid-container">
+            
+            <div class="section-title">Клиентская зона</div>
+
+            <!-- Добавление счета -->
+            <div class="card">
+                <h3>🆕 Создание счета</h3>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="reg-name">ИМЯ (НА АНГЛИЙСКОМ):</label>
+                        <input type="text" id="reg-name" required placeholder="Ivan Ivanov">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">ЭЛЕКТРОННАЯ ПОЧТА (GMAIL):</label>
+                        <input type="email" id="reg-email" required placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">ПАРОЛЬ ОТ СЧЕТА:</label>
+                        <input type="password" id="reg-password" required placeholder="••••••••">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                        <button type="reset" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Получение баланса -->
+            <div class="card">
+                <h3>💰 Проверить баланс</h3>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="bal-id">ID СЧЕТА:</label>
+                        <input type="text" id="bal-id" required placeholder="Введите ваш ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="bal-password">ПАРОЛЬ:</label>
+                        <input type="password" id="bal-password" required placeholder="••••••••">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                        <button type="reset" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Перевод -->
+            <div class="card" style="grid-row: span 1;">
+                <h3>💸 Денежный перевод</h3>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="trans-from">ПЕРЕВЕСТИ С (ID):</label>
+                        <input type="text" id="trans-from" required placeholder="ID отправителя">
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-to">ПЕРЕВЕСТИ НА (ID):</label>
+                        <input type="text" id="trans-to" required placeholder="ID получателя">
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-amount">СУММА (СРЕДСТВА):</label>
+                        <input type="number" id="trans-amount" required placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-password">ПАРОЛЬ:</label>
+                        <input type="password" id="trans-password" required placeholder="••••••••">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                        <button type="reset" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Блокирование счета -->
+            <div class="card">
+                <h3>🔒 Блокирование счета</h3>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="block-id">ID СЧЕТА:</label>
+                        <input type="text" id="block-id" required placeholder="Введите ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="block-password">ПАРОЛЬ:</label>
+                        <input type="password" id="block-password" required placeholder="••••••••">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-danger">Отправить</button>
+                        <button type="reset" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Удаление счета -->
+            <div class="card">
+                <h3>❌ Удаление счета</h3>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="del-id">ID СЧЕТА:</label>
+                        <input type="text" id="del-id" required placeholder="Введите ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="del-password">ПАРОЛЬ:</label>
+                        <input type="password" id="del-password" required placeholder="••••••••">
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-danger">Отправить</button>
+                        <button type="reset" class="btn btn-secondary">Очистить</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <section class="policy-section">
+            <h2>Политика конфиденциальности онлайн-банка "Национальный банк игры"</h2>
+            
+            <div class="policy-block">
+                <h4>1. Введение</h4>
+                <p>Политика конфиденциальности определяет, как онлайн-банк "Национальный банк игры" собирает, использует, хранит, раскрывает и защищает вашу персональную информацию. Мы стремимся обеспечить максимальную конфиденциальность и безопасность ваших данных. Пользуясь услугами Банка, вы соглашаетесь с условиями, изложенными в Политике.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>2. Сбор персональных данных</h4>
+                <p>Мы собираем различные типы персональных данных, необходимых для предоставления вам банковских услуг. Это может включать: Пароль аккаунта, Электронная почта, Имя. Финансовая информация: Данные о счетах, транзакциях, кредитной истории. Технические данные: IP-адрес, тип устройства, данные о вашем браузере, файлы cookie. Данные об использовании: Информация о том, как вы взаимодействуете с нашим веб-сайтом и мобильным приложением.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>3. Использование персональных данных</h4>
+                <p>Ваши персональные данные используются для следующих целей: Предоставление и управление вашими банковскими счетами и услугами. Идентификация вас как клиента и обеспечение безопасности ваших транзакций. Обработка ваших запросов и предоставление поддержки. Улучшение наших продуктов и услуг, анализ пользовательского поведения. Соблюдение законодательных и нормативных требований.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>4. Раскрытие персональных данных</h4>
+                <p>Мы можем раскрывать ваши персональные данные в следующих случаях: С вашего согласия: Если вы прямо разрешили нам раскрыть ваши данные определенным третьим лицам. Поставщикам услуг: Компании, которые помогают нам в предоставлении услуг, при условии соблюдения ими конфиденциальности. В соответствии с законом: Если это требуется по закону, по решению суда или запросу регулирующих органов. В случае слияния или поглощения: При реорганизации Банка ваши данные могут быть переданы новым владельцу.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>5. Безопасность данных</h4>
+                <p>Мы применяем комплексные технические и организационные меры безопасности для защиты ваших персональных данных. Это включает шифрование данных, многофакторную аутентификацию и регулярный аудит систем безопасности.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>6. Ваши права</h4>
+                <p>Вы имеете право на доступ к своим персональным данным, их исправление, удаление, ограничение обработки, а также право на портативность данных. Для реализации этих прав, пожалуйста, свяжитесь с нами.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>7. Изменения Политики</h4>
+                <p>Мы можем периодически обновлять Политику. О любых существенных изменениях мы сообщим вам через наш веб-сайт или по электронной почте.</p>
+            </div>
+
+            <div class="policy-block">
+                <h4>8. Контактная информация</h4>
+                <p>По всем вопросам, связанным с настоящей Политикой, обращайтесь в службу поддержки "Банк-онлайн".</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 City's Bank. Все права защищены. Разработано &copy;<a href="https://github.com/RPM-programmer/" style="color: var(--text-muted); text-decoration: none;">RPM-programmer</a> для банка игры.</p>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                themeBtn.textContent = 'Тёмная тема';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeBtn.textContent = 'Светлая тема';
+            }
+        });
+    </script>
+</body>
+</html>

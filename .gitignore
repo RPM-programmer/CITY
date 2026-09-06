@@ -12,5 +12,6 @@ cert.pem
 key.pem
 
 test/
+generator/
 
 dbBT.js
