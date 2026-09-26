@@ -1,16 +1,18 @@
+// Сторонние библиотеки
+require('dotenv').config();
+const { print } = require("custom-color-logs");
+const express = require("express");
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const chalk = require("chalk-palette");
+console.log(print.ServerInfo("Сторонние модули загружены!"));
+
+
 // Встроенные библиотеки
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
-
-
-// Сторонние библиотеки
-require('dotenv').config();
-const express = require("express");
-const cors = require("cors");
-const rateLimit = require("express-rate-limit");
-const chalk = require("chalk-palette"); 
-const logger = require("custom-color-logs");
+console.log(print.ServerInfo("Встроенные модули загружены!"));
 
 
 // свои (вложенные)
@@ -80,8 +82,6 @@ async function serveFile(filePath, res) {
   }
 }
 
-
-// логируем то что модули загружены
 
 
 // создание сервера
