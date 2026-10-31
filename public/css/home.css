@@ -1,0 +1,479 @@
+/* БАЗОВЫЕ НАСТРОЙКИ СТИЛЕЙ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #080b11;
+  color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+}
+
+/* ЖИВАЯ АНИМАЦИЯ ПЛАВНОГО ФОНА СЕРВЕРА */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(0, 100, 255, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(0, 200, 100, 0.1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 75% 85%,
+      rgba(230, 30, 10, 0.06) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 25% 75%,
+      rgba(240, 245, 255, 0.04) 0%,
+      transparent 35%
+    );
+  background-size: 140% 140%;
+  filter: blur(70px);
+  animation: serverGlow 20s ease infinite alternate;
+}
+
+@keyframes serverGlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* ШАПКА, МЕНЮ И ИНТЕРФЕЙС */
+header {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+  flex: 1;
+}
+
+.main-nav {
+  background: rgba(17, 24, 39, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 25px;
+  border-radius: 50px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav span {
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 300;
+}
+
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.dropdown-area {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8f9fa;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.dropdown-btn::after {
+  content: "▼";
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.dropdown.active .dropdown-btn::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  padding-top: 5px;
+  z-index: 100;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+.dropdown-inner {
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 160px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-inner a {
+  color: #94a3b8;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: block;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.dropdown-inner a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding-left: 24px;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.info-section {
+  background: rgba(17, 24, 39, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.info-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+.info-section p {
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+  font-size: 0.9rem;
+  z-index: 10;
+}
+
+/* СТИЛИ ДОРОГИ И ГОРОДСКИХ МАШИНОК */
+.road-track {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.01);
+  z-index: 5;
+}
+
+.traffic-car {
+  position: absolute;
+  width: 45px;
+  height: 12px;
+  background: #1e293b;
+  border-radius: 4px 6px 2px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.traffic-car::before {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 3px;
+  width: 3px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 8px #fff,
+    5px 0 15px rgba(255, 255, 255, 0.6);
+}
+.traffic-car::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 3px;
+  width: 2px;
+  height: 6px;
+  background: #ff3333;
+  border-radius: 1px;
+  box-shadow: 0 0 6px #ff3333;
+}
+
+.siren {
+  position: absolute;
+  top: -4px;
+  left: 18px;
+  width: 10px;
+  height: 5px;
+  border-radius: 2px 2px 0 0;
+  background: transparent;
+}
+
+.car-police .siren {
+  animation: policeFlash 0.3s infinite alternate;
+}
+@keyframes policeFlash {
+  0% {
+    background: #0044ff;
+    box-shadow:
+      0 0 15px #0044ff,
+      -8px 0 20px #0044ff;
+  }
+  100% {
+    background: #ff0000;
+    box-shadow:
+      0 0 15px #ff0000,
+      8px 0 20px #ff0000;
+  }
+}
+
+.car-medical .siren {
+  animation: medicalFlash 0.25s infinite alternate;
+}
+@keyframes medicalFlash {
+  0% {
+    background: #00d9ff;
+    box-shadow: 0 0 20px #00d9ff;
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.car-fire {
+  width: 55px;
+  height: 14px;
+  background: #d90429;
+}
+.car-fire .siren {
+  animation: fireFlash 0.2s infinite alternate;
+}
+@keyframes fireFlash {
+  0% {
+    background: #ff0000;
+    box-shadow: 0 0 20px #ff0000;
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+.car-taxi {
+  background: #ffb703;
+}
+.car-taxi::before {
+  box-shadow:
+    0 0 8px #fff,
+    5px 0 15px rgba(255, 183, 3, 0.5);
+}
+.car-taxi .siren {
+  display: none;
+}
+
+.car-bus {
+  width: 75px;
+  height: 16px;
+  background: #ffcc00;
+  border-radius: 4px 4px 2px 2px;
+}
+.car-bus .siren {
+  display: none;
+}
+
+.car-minibus {
+  width: 58px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 4px 5px 2px 2px;
+}
+.car-minibus::before {
+  box-shadow:
+    0 0 8px #fff,
+    5px 0 15px rgba(255, 230, 150, 0.5);
+}
+.car-minibus .siren {
+  display: none;
+}
+
+.car-service .siren {
+  animation: serviceFlash 0.4s infinite alternate;
+}
+@keyframes serviceFlash {
+  0% {
+    background: #ffaa00;
+    box-shadow: 0 0 18px #ffaa00;
+  }
+  100% {
+    background: #331100;
+    box-shadow: none;
+  }
+}
+
+.car-trolleybus {
+  width: 75px;
+  height: 16px;
+  background: #0055ff;
+  border-radius: 4px 4px 2px 2px;
+}
+.car-trolleybus .siren {
+  display: none;
+}
+.car-trolleybus::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 10px;
+  width: 35px;
+  height: 8px;
+  border-top: 2px solid #64748b;
+  border-right: 2px solid #64748b;
+  transform: skewX(-30deg);
+}
+
+.car-civilian .siren {
+  display: none;
+}
+
+/* Скорости анимаций */
+.speed-fast {
+  animation: crossScreen 3.5s linear forwards;
+}
+.speed-slow {
+  animation: crossScreen 9s linear forwards;
+}
+.speed-civilian-slow {
+  animation: crossScreen 8s linear forwards;
+}
+.speed-civilian-medium {
+  animation: crossScreen 6s linear forwards;
+}
+.speed-civilian-fast {
+  animation: crossScreen 4.5s linear forwards;
+}
+
+@keyframes crossScreen {
+  0% {
+    left: -80px;
+  }
+  100% {
+    left: calc(100% + 80px);
+  }
+}
+
+/* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 15px;
+  }
+  .logo {
+    flex: unset;
+    font-size: 1.6rem;
+  }
+  .dropdown-area {
+    flex: unset;
+  }
+  .main-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    background: rgba(17, 24, 39, 0.4);
+    padding: 12px 15px;
+    gap: 12px;
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    font-size: 0.95rem;
+  }
+  .main-nav span {
+    display: none;
+  }
+  .road-track {
+    bottom: 55px;
+  }
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CITY — Сервер</title>
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/animations.css" />
+  </head>
+  <body>
+    <div id="coin-container"></div>
+    <header>
+      <div class="logo">CITY</div>
+      <nav class="main-nav">
+        <a href="#info" class="nav-link" onclick="switchPage(event, 'info')"
+          >инфо</a
+        >
+        <span>-</span>
+        <a href="#bank" class="nav-link" onclick="switchPage(event, 'bank')"
+          >банк</a
+        >
+        <span>-</span>
+        <a href="#med" class="nav-link" onclick="switchPage(event, 'med')"
+          >мед</a
+        >
+        <span>-</span>
+        <a href="#about" class="nav-link" onclick="switchPage(event, 'about')"
+          >о нас</a
+        >
+        <span>-</span>
+        <a
+          href="#contacts"
+          class="nav-link"
+          onclick="switchPage(event, 'contacts')"
+          >контакты</a
+        >
+      </nav>
+      <div class="dropdown-area">
+        <div class="dropdown" id="servicesDropdown">
+          <button class="dropdown-btn" onclick="toggleDropdown(event)">
+            Сервисы
+          </button>
+          <div class="dropdown-content">
+            <div class="dropdown-inner">
+              <a href="#bank" onclick="switchPage(event, 'bank')">Банк</a>
+              <a href="#med" onclick="switchPage(event, 'med')">Мед</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="page-info" class="info-section active-page">
+        <h2>Информационный центр</h2>
+        <p>
+          Добро пожаловать в CITY! Наш сервер обеспечивает стабильный аптайм и
+          высокую производительность для всех систем виртуального города.
+          Выберите необходимый раздел в меню выше, чтобы начать работу.
+        </p>
+      </section>
+      <section id="page-bank" class="info-section" style="display: none">
+        <h2>Городской Банк</h2>
+        <p>
+          Управление финансовыми потоками CITY. Здесь вы можете проверить баланс
+          лицевого счета, совершить межбанковские переводы, оформить
+          внутриигровой кредит или настроить автоматические выплаты налогов.
+        </p>
+        <p>
+          Чтобы начать выберите
+          <i><b>Сервисы</b> → <b>Банк</b></i> или нажмите
+          <a href="/bank/home.html" title="sequelize-game-bank">сюда</a>
+        </p>
+      </section>
+      <section id="page-med" class="info-section" style="display: none">
+        <h2>Медицинский Департамент</h2>
+        <p>
+          Центральная система здравоохранения. Новости, участки, приёмы и ещё
+          многое...
+        </p>
+        <p>
+          Что-бы начать нажмите <i><b>Сервисы</b> → <b>Мед</b></i> или нажмите
+          <a href="/med/" title="med-cms">сюда</a>
+        </p>
+      </section>
+      <section id="page-about" class="info-section" style="display: none">
+        <h2>О нашем проекте</h2>
+        <p>
+          CITY "игра город" — это уникальная экосистема, симулирующая жизнь
+          современного мегаполиса. Проект запущен в 2026 году и сочетает в себе
+          продвинутую экономическую модель и ролевое взаимодействие.
+        </p>
+      </section>
+      <section id="page-contacts" class="info-section" style="display: none">
+        <h2>Контакты и Поддержка</h2>
+        <p>Возникли проблемы в работе сайта? Пишите...</p>
+        <p>
+          Наши контакты:
+          <a
+            href="https://invite.viber.com/?g2=AQA2%2BAuGjc0IKVUlWHvVuA0Rl9c4G4gP3WlS%2FfXsqUoBT9sKCsNU%2FXYghLl%2FLnHw"
+            >Viber</a
+          >
+          <a href="https://chat.google.com/room/AAQAygKGLtY?cls=7">Gmail</a>
+        </p>
+        <p>Почта — promanenko214@gmail.com</p>
+      </section>
+    </main>
+    <div class="road-track" id="road"></div>
+    <footer>
+      <p>&copy; 2026 CITY "игра город"</p>
+    </footer>
+    <script src="/js/home.js"></script>
+    <script src="/js/animations.js"></script>
+  </body>
+</html>

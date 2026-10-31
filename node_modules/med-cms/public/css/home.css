@@ -1,0 +1,155 @@
+/* Стили главной страницы медицинского портала */
+
+body {
+  display: block;
+  height: auto;
+  margin: 0;
+  background-color: #f8fafc;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1e3a8a;
+  font-family: monospace;
+}
+
+.btn-login {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-login:hover {
+  background-color: #1d4ed8;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.nav-btn {
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #334155;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: #cbd5e1;
+}
+
+.nav-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.info-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  min-height: 200px;
+  margin-bottom: 30px;
+  border-left: 5px solid #2563eb;
+  box-sizing: border-box;
+}
+
+.info-card h2 {
+  margin-top: 0;
+  color: #1e3a8a;
+}
+
+.interactive-zone {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border: 2px dashed #cbd5e1;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.interactive-zone h3 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+.interactive-zone input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.interactive-zone input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-ok {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 15px;
+  transition: background-color 0.2s;
+}
+
+.btn-ok:hover {
+  background-color: #059669;
+}
+
+.result-box {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #2563eb;
+  line-height: 1.5;
+}
+
+.main-footer {
+  background: #1e293b;
+  color: #94a3b8;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 50px;
+}

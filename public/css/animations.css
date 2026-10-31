@@ -1,0 +1,352 @@
+/* ======================================================= */
+/*    НОВЫЕ ЭФФЕКТЫ ДЛЯ ОСОБЫХ КАТАСТРОФ CITY              */
+/* ======================================================= */
+
+/* Полноэкранный переворот (Персонажа отбрасывает взрывом) */
+.screen-flip {
+  animation: flipAndBlur 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+@keyframes flipAndBlur {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+  30% {
+    transform: rotate(15deg) scale(1.1);
+    filter: blur(8px);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Полноэкранный дым, поднимающийся снизу вверх */
+.screen-smoke-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(80, 80, 80, 0.8) 0%,
+    rgba(40, 40, 40, 0.4) 60%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: riseSmoke 4s ease-out forwards;
+}
+@keyframes riseSmoke {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Пожар по всему экрану (мерцающие огоньки внизу и по бокам) */
+.screen-fire-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  pointer-events: none;
+  box-shadow:
+    inset 0 -100px 150px rgba(255, 60, 0, 0.6),
+    inset 100px 0 100px rgba(255, 100, 0, 0.2),
+    inset -100px 0 100px rgba(255, 100, 0, 0.2);
+  animation: globalFire 0.15s infinite alternate ease-in-out;
+}
+@keyframes globalFire {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Медленное ползание персонажа (Тяжелая затяжная тряска) */
+.crawling-screen {
+  animation: crawlShake 6s infinite ease-in-out;
+}
+@keyframes crawlShake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(-4px, 3px) rotate(-0.5deg);
+  }
+  40% {
+    transform: translate(5px, -2px) rotate(0.5deg);
+  }
+  60% {
+    transform: translate(-3px, -3px) rotate(-0.3deg);
+  }
+  80% {
+    transform: translate(4px, 2px) rotate(0.2deg);
+  }
+}
+
+/* КРАСНО-ЧЕРНЫЙ ЭКРАН СМЕРТИ (Прозрачный для мигалок сзади) */
+.permadeath-screen {
+  position: fixed;
+  inset: 0;
+  /* Сделали фон чуть прозрачнее, чтобы сквозь него пробивался свет сирен */
+  background: radial-gradient(
+    circle,
+    rgba(15, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.95) 100%
+  ) !important;
+  z-index: 999999 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  opacity: 0;
+  animation: fadeInDeath 1.5s ease-out forwards;
+}
+
+/* Оверлей двойной сирены (Скорая + Полиция) для экрана смерти */
+.death-siren-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999998; /* Строго ПОД экраном смерти */
+  pointer-events: none;
+  animation: dualSirenFlash 0.3s infinite steps(2, start);
+}
+
+@keyframes dualSirenFlash {
+  0% {
+    background: rgba(0, 50, 255, 0.25);
+  } /* Синий стробоскоп */
+  50% {
+    background: rgba(255, 0, 0, 0.2);
+  } /* Красный стробоскоп */
+}
+
+@keyframes fadeInDeath {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.permadeath-title {
+  color: #ff3333;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  margin-bottom: 10px;
+}
+
+.permadeath-reason {
+  color: #cbd5e1;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.4;
+}
+
+.respawn-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ff3333;
+  padding: 14px 45px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+}
+
+.respawn-btn:hover {
+  background: #ff3333;
+  color: #000000;
+  box-shadow: 0 0 30px rgba(255, 51, 51, 0.7);
+  transform: scale(1.05);
+}
+
+/* Остальные базовые оверлеи */
+#coin-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+.easter-coin {
+  position: absolute;
+  top: -20px;
+  width: 16px;
+  height: 16px;
+  background: #ffd700;
+  border-radius: 50%;
+  border: 1px solid #d4af37;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  animation: fallDown linear forwards;
+}
+@keyframes fallDown {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+.screamer-siren {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+  animation: fullScreenSiren 0.25s infinite alternate;
+}
+@keyframes fullScreenSiren {
+  0% {
+    background: rgba(0, 40, 255, 0.3);
+  }
+  100% {
+    background: rgba(255, 0, 0, 0.3);
+  }
+}
+.white-flash {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 10001;
+  pointer-events: none;
+  opacity: 0;
+}
+.white-flash.active {
+  opacity: 1;
+}
+.white-flash.fade-out {
+  opacity: 0;
+  transition: opacity 2s ease-out;
+}
+.blackout-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  z-index: 10002;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+.blackout-overlay.active {
+  opacity: 1;
+}
+.blue-neon-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  animation: ambulanceSirenFlash 0.4s infinite steps(2, start);
+}
+@keyframes ambulanceSirenFlash {
+  0%,
+  100% {
+    background: rgba(0, 80, 255, 0.45);
+    box-shadow: inset 0 0 120px rgba(0, 100, 255, 0.7);
+  }
+  50% {
+    background: rgba(0, 20, 80, 0.05);
+    box-shadow: inset 0 0 30px rgba(0, 40, 150, 0.2);
+  }
+}
+.car-emergency-lights::before {
+  animation: hazardFlash 0.5s infinite steps(2, start) !important;
+}
+.accident-stop {
+  animation-play-state: paused !important;
+}
+/* КРАСНО-ЧЕРНЫЙ ЭКРАН СМЕРТИ (В стиле игр) */
+.permadeath-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(20, 0, 0, 0.98) 0%,
+    #000000 100%
+  ) !important;
+  z-index: 999999 !important; /* Поверх абсолютно всего */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  opacity: 0;
+  animation: fadeInDeath 1.5s ease-out forwards; /* Плавно проявляется */
+}
+
+@keyframes fadeInDeath {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.permadeath-title {
+  color: #ff3333;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  margin-bottom: 10px;
+}
+
+.permadeath-reason {
+  color: #cbd5e1;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* СТИЛЬНАЯ КНОПКА ВОЗРОЖДЕНИЯ */
+.respawn-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ff3333;
+  padding: 14px 45px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+}
+
+.respawn-btn:hover {
+  background: #ff3333;
+  color: #000000;
+  box-shadow: 0 0 30px rgba(255, 51, 51, 0.7);
+  transform: scale(1.05);
+}

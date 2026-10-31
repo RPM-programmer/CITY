@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Медицинский Портал | Клиника</title>
+    <!-- Подключаем внешние стили -->
+    <link rel="stylesheet" href="/med/css/auth.css" />
+    <link rel="stylesheet" href="/med/css/home.css" />
+  </head>
+  <body>
+    <!-- Шапка сайта по вашему эскизу -->
+    <header class="main-header">
+      <div class="logo">MED-CMS</div>
+      <a href="/med/html/login.html" class="btn-login">ВОЙТИ</a>
+    </header>
+
+    <div class="content-wrapper">
+      <div class="nav-container">
+        <button class="nav-btn active" onclick="switchSection('news', this)">
+          Новости
+        </button>
+        <button class="nav-btn" onclick="switchSection('about', this)">
+          О нас
+        </button>
+        <button class="nav-btn" onclick="switchSection('info', this)">
+          Инфо-источник
+        </button>
+        <button class="nav-btn" onclick="switchSection('contact', this)">
+          Контакты
+        </button>
+      </div>
+      <main class="info-card">
+        <div id="news-box">
+          <p style="color: #64748b">Загрузка контента ленты...</p>
+        </div>
+        <div id="about-box" style="display: none">
+          <h2>MED-CMS — Медецинская система написаная на JavaScript</h2>
+          <p>
+            Модуль написан разработчиком
+            <a
+              href="https://github.com/RPM-programmer"
+              style="text-decoration: none; color: black"
+              title="gitgub.com"
+              >RPM-programmer</a
+            >
+            (<a
+              href="https://www.npmjs.com/~prm-programmer"
+              style="text-decoration: none; color: black"
+              title="www.npmjs.com"
+              >prm-programmer</a
+            >)
+          </p>
+        </div>
+        <div id="info-box" style="display: none">
+          <h2>Информационный источник</h2>
+          <p>
+            Полезные статьи о профилактике сезонных ОРВИ, контроле артериального
+            давления при гипертонии и правилах подготовки к плановым
+            диагностическим осмотрам в кабинетах поликлиники.
+          </p>
+          <hr />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/4.%20%D0%9B%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%B1%D0%B5%D1%88%D0%B5%D0%BD%D1%81%D1%82%D0%B2%D0%BE%2024.03.2026%20%D0%A3%D0%B4%D0%BE%D1%82_page-0001.jpg"
+          />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/9.%20%D0%9B%D0%B8%D1%81%D1%82%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%B2%D0%B5%D1%82%D1%80%D1%8F%D0%BD%D0%B0%D1%8F%20%D0%BE%D1%81%D0%BF%D0%B0%2014.04.2026%20%D0%A3%D0%B4%D0%BE%D1%82_page-0001.jpg"
+          />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/10.%20%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B0%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0%D0%9A%D0%BE%D1%80%D0%B814.04.2026%20%D0%93%D0%B0%D0%B2%D1%80%D0%B8%D0%BD%D0%B0_page-0001.jpg"
+          />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B0%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B1%D0%BD%D1%8F%D0%BA%20-%20%D1%8D%D1%82%D0%BE%20%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE!_page-0002.jpg"
+          />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D0%BA%D0%B0%20%D0%A1%D1%82%D0%BE%D0%BB%D0%B1%D0%BD%D1%8F%D0%BA%20-%20%D1%8D%D1%82%D0%BE%20%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE!_page-0001.jpg"
+          />
+          <img
+            src="https://17gdp.by/files/00204/obj/140/4173/img/(4)-%D0%9A%D0%BB%D0%B5%D1%89%D0%B5%D0%B2%D1%8B%D1%85-%D0%B8%D0%BD%D1%84%D0%B5%D0%BA%D1%86%D0%B8%D0%B9-%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE-%D0%B8%D0%B7%D0%B1%D0%B5%D0%B6%D0%B0%D1%82%D1%8C.jpg"
+          />
+        </div>
+        <div id="contacts-box" style="display: none">
+          <h2>Контакты</h2>
+          <hr />
+          <p id="login-contact">Хотите работать у нас? — Звоните по номеру</p>
+          <p>Нашли ошибку — пишите на promanenko214@gmail.com</p>
+          <script>
+            document.addEventListener("DOMContentLoaded", async () => {
+              const lc = document.getElementById("login-contact");
+              if (!lc) return;
+              try {
+                let text = lc.innerHTML;
+                const res = await fetch("/med/api/info/contact/", {
+                  method: "GET",
+                });
+                const result = await res.json();
+                lc.innerHTML = text + " " + (result.phone || "номер не указан");
+              } catch (err) {
+                console.error("Ошибка при получении контактов:", err);
+              }
+            });
+          </script>
+        </div>
+      </main>
+
+      <!-- Интерактивная зона проверки медицинских участков -->
+      <section class="interactive-zone">
+        <h3>Проверьте ваш лечебный участок онлайн</h3>
+        <p style="color: #64748b; font-size: 14px">
+          Введите ваш полный адрес проживания для точного определения кабинета:
+        </p>
+
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 500px;
+            margin: 15px auto 0 auto;
+          "
+        >
+          <input
+            type="text"
+            id="checkCityInput"
+            placeholder="Город (Минск)"
+            style="width: 30%; margin-top: 0"
+          />
+          <input
+            type="text"
+            id="checkStreetInput"
+            placeholder="Улица (Волоха)"
+            style="width: 50%; margin-top: 0"
+          />
+          <input
+            type="text"
+            id="checkHouseInput"
+            placeholder="Дом (15)"
+            style="width: 20%; margin-top: 0"
+          />
+        </div>
+
+        <br />
+        <button class="btn-ok" onclick="checkDistrictOnline()">ОК</button>
+        <div id="checkResultBox" class="result-box"></div>
+      </section>
+    </div>
+
+    <!-- Подвал сайта -->
+    <footer class="main-footer">
+      <p>
+        © 2026 Разработано на базе модульного движка MED-CMS. Все права
+        защищены. Минск, Республика Беларусь.
+      </p>
+    </footer>
+
+    <!-- Подключаем внешний JavaScript-файл логики -->
+    <script src="/med/js/home.js"></script>
+  </body>
+</html>

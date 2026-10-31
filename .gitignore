@@ -1,17 +1,4 @@
-*.log
 
-*.db
-
+# Added by ggshield
+.cache_ggshield
 .env
-
-test.js
-
-console.js
-
-cert.pem
-key.pem
-
-test/
-generator/
-
-dbBT.js

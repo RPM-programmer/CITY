@@ -1,33 +1,39 @@
 {
-  "name": "js",
-  "version": "2.1.5",
-  "main": "server.js",
-  "author": "Pavel",
-  "license": "ISC",
+  "name": "CITY",
+  "version": "3.0.0",
+  "description": "",
+  "main": "index.js",
   "private": true,
+  "keywords": [],
+  "type": "commonjs",
   "scripts": {
-    "start": "nodemon https.js start",
-    "dev": "nodemon http.js start"
+    "https": "node ./start/https.js start",
+    "http": "node ./start/http.js start",
+    "https-test": "nodemon ./start/https.js start",
+    "http-test": "nodemon ./start/http.js start"
   },
   "dependencies": {
-    "bad-words": "^4.1.5",
-    "chalk": "^6.0.0",
-    "chalk-palette": "^1.5.5",
-    "cors": "^2.8.6",
-    "custom-color-logs": "^1.1.0",
-    "dotenv": "^17.4.2",
-    "express-rate-limit": "^8.5.2",
-    "helmet": "^8.3.0",
-    "input-event": "^1.2.6",
-    "nodemailer": "^9.0.5",
-    "russian-bad-words": "^0.5.0",
-    "sequelize": "^6.37.8",
-    "socket.io": "^4.8.3",
+    "custom-color-logs": "^3.2.1",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "med-cms": "^1.2.1",
+    "sequelize-game-bank": "^5.0.2",
     "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "mocha": "^11.7.6",
     "nodemon": "^3.1.14"
   },
-  "description": "Данное обновление понадобилось для интеграции модуля Nodemailer, который обеспечивает отправку уведомлений на электронную почту и улучшает безопастность платежей банка. Версия 2.1.5"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RPM-programmer/CITY.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RPM-programmer/CITY/issues"
+  },
+  "homepage": "https://github.com/RPM-programmer/CITY#readme",
+  "allowScripts": {
+    "sqlite3@6.0.1": true,
+    "bcrypt@6.0.0": true
+  }
 }
