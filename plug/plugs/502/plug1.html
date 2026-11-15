@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ошибка 502 | Плохой шлюз</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #0b0f19;
+        color: #e2e8f0;
+      }
+      .container {
+        text-align: center;
+        max-width: 480px;
+        background: #111827;
+        padding: 40px;
+        border-radius: 12px;
+        border: 1px solid #1f2937;
+      }
+      .net-status {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+        font-size: 32px;
+      }
+      .line {
+        color: #f43f5e;
+        font-size: 20px;
+        letter-spacing: -2px;
+      }
+      h1 {
+        font-size: 20px;
+        margin-bottom: 12px;
+        color: #ffffff;
+      }
+      p {
+        color: #9ca3af;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="net-status">🌐 <span class="line">──❌──</span> 🖥️</div>
+      <h1>Ошибка связи между серверами</h1>
+      <p>
+        Наш пограничный шлюз не смог получить ответ от основного узла
+        приложения. Обычно это означает, что бэкенд прямо сейчас
+        перезапускается.
+      </p>
+    </div>
+  </body>
+</html>

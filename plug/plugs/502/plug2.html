@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ошибка шлюза (502)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      .card {
+        max-width: 450px;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        position: relative;
+        border: 1px solid #e2e8f0;
+      }
+      .badge {
+        position: absolute;
+        top: -15px;
+        left: 40px;
+        background: #f43f5e;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+      h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+      }
+      p {
+        color: #475569;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="badge">Bad Gateway</div>
+      <h1>Узел временно недоступен</h1>
+      <p>
+        Сетевой распределитель не смог установить надежное соединение с сервером
+        контента. Попробуйте обновить страницу через 15–30 секунд.
+      </p>
+    </div>
+  </body>
+</html>

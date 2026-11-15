@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STATUS_502</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #000;
+        color: #00ff66;
+      }
+      .terminal {
+        max-width: 500px;
+        border: 1px solid #00ff66;
+        padding: 30px;
+        background: rgba(0, 255, 102, 0.02);
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+      }
+      h1 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      p {
+        color: #a3ffc2;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .alert {
+        color: #ff3366;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="terminal">
+      <h1>[CRITICAL]: GATEWAY_ERROR</h1>
+      <p><span class="alert">> STATUS:</span> 502 Bad Gateway</p>
+      <p>
+        <span class="alert">> DESCRIPTION:</span> Нарушена цепочка сетевых
+        прокси. Удаленный хост разорвал соединение до передачи HTTP-заголовков
+        контента.
+      </p>
+    </div>
+  </body>
+</html>

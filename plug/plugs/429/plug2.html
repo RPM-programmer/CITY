@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лимит превышен (429)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      .box {
+        text-align: center;
+        max-width: 440px;
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        border: 1px solid #e2e8f0;
+      }
+      .speed {
+        font-size: 56px;
+        margin-bottom: 15px;
+        display: inline-block;
+      }
+      h1 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #0f172a;
+      }
+      p {
+        color: #475569;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .timer-badge {
+        display: inline-block;
+        background: #f1f5f9;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="speed">⚡💨</div>
+      <h1>Пожалуйста, притормозите</h1>
+      <p>
+        Вы кликаете или обновляете страницы слишком быстро. Серверу нужно
+        немного времени, чтобы обработать предыдущие сессии.
+      </p>
+      <div class="timer-badge">
+        Повторный доступ через: <span id="countdown">30</span> сек
+      </div>
+    </div>
+
+    <script>
+      let timeLeft = 30; // Время ожидания в секундах
+      const timerEl = document.getElementById("countdown");
+      const interval = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          window.location.reload(); // Перезагружаем страницу, когда время вышло
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

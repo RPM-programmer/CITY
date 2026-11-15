@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Сайт недоступен</title>
+    <style>
+      :root {
+        --bg-color: #f7f9fa;
+        --text-color: #202124;
+        --muted-color: #5f6368;
+        --button-bg: #1a73e8;
+        --button-hover: #1557b0;
+        --button-text: #ffffff;
+        --game-color: #535353;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-color: #202124;
+          --text-color: #e8eaed;
+          --muted-color: #9aa0a6;
+          --button-bg: #8ab4f8;
+          --button-hover: #93baf9;
+          --button-text: #202124;
+          --game-color: #aaaeb3;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          -apple-system,
+          Roboto,
+          sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 24px;
+        overflow-x: hidden;
+        user-select: none;
+      }
+
+      .main-frame {
+        max-width: 580px;
+        width: 100%;
+        margin-top: -40px;
+      }
+      .game-wrapper {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        margin-bottom: 35px;
+        border-bottom: 2px solid var(--game-color);
+        cursor: pointer;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      h1 {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.3;
+        margin-bottom: 16px;
+        color: var(--text-color);
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--muted-color);
+        margin-bottom: 20px;
+      }
+
+      .error-code {
+        font-size: 12px;
+        color: var(--muted-color);
+        margin-bottom: 28px;
+        font-family: monospace;
+      }
+
+      .btn-reload {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--button-text);
+        background-color: var(--button-bg);
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+        transition:
+          background-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .btn-reload {
+          box-shadow: none;
+        }
+        .btn-reload:hover {
+          background-color: #a1c5fa;
+        }
+      }
+      @media (prefers-color-scheme: light) {
+        .btn-reload:hover {
+          background-color: var(--button-hover);
+          box-shadow: 0 1px 3px rgba(60, 64, 67, 0.4);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-frame">
+      <div
+        class="game-wrapper"
+        id="gameArea"
+        title="Нажмите пробел, чтобы играть"
+      >
+        <canvas id="dinoCanvas" width="600" height="150"></canvas>
+      </div>
+
+      <h1>Не удается получить доступ к сайту</h1>
+      <p>
+        Веб-сервер успешно принял соединение на этом порту, но основное
+        приложение остановлено для обновления конфигурации или обслуживания.
+      </p>
+
+      <div class="error-code">ERR_CONNECTION_REFUSED_BY_MAINTENANCE</div>
+
+      <button onclick="window.location.reload()" class="btn-reload">
+        Обновить
+      </button>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("dinoCanvas");
+      const ctx = canvas.getContext("2d");
+      const gameArea = document.getElementById("gameArea");
+
+      let gameColor =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--game-color")
+          .trim() || "#535353";
+      setInterval(() => {
+        gameColor = getComputedStyle(document.documentElement)
+          .getPropertyValue("--game-color")
+          .trim();
+      }, 1000);
+
+      let isStarted = false;
+      let isGameOver = false;
+      let score = 0;
+      let speed = 6;
+      let obstacles = [];
+      let nextObstacleTimer = 0;
+
+      const dino = {
+        x: 50,
+        y: 0,
+        width: 22,
+        height: 24,
+        vy: 0,
+        gravity: 0.6,
+        jumpForce: -10,
+        isGrounded: true,
+        legToggle: false,
+        tick: 0,
+        draw() {
+          ctx.fillStyle = gameColor;
+          // Оригинальный силуэт из пикселей (тело)
+          ctx.fillRect(
+            this.x,
+            canvas.height - this.height - this.y,
+            this.width,
+            this.height - 4,
+          );
+          // Мордочка/голова
+          ctx.fillRect(
+            this.x + 10,
+            canvas.height - this.height - this.y - 6,
+            14,
+            8,
+          );
+          // Глаз
+          ctx.fillStyle = getComputedStyle(document.documentElement)
+            .getPropertyValue("--bg-color")
+            .trim();
+          ctx.fillRect(
+            this.x + 14,
+            canvas.height - this.height - this.y - 4,
+            2,
+            2,
+          );
+          ctx.fillStyle = gameColor;
+
+          if (!this.isGrounded || isGameOver) {
+            ctx.fillRect(this.x + 4, canvas.height - 4 - this.y, 4, 4);
+            ctx.fillRect(this.x + 14, canvas.height - 4 - this.y, 4, 4);
+          } else {
+            this.tick++;
+            if (this.tick % 8 === 0) this.legToggle = !this.legToggle;
+            if (this.legToggle) {
+              ctx.fillRect(this.x + 4, canvas.height - 4, 4, 4);
+            } else {
+              ctx.fillRect(this.x + 14, canvas.height - 4, 4, 4);
+            }
+          }
+        },
+        jump() {
+          if (this.isGrounded && !isGameOver) {
+            this.vy = this.jumpForce;
+            this.isGrounded = false;
+          }
+        },
+        update() {
+          this.y -= this.vy;
+          if (!this.isGrounded) this.vy += this.gravity;
+          if (this.y <= 0) {
+            this.y = 0;
+            this.vy = 0;
+            this.isGrounded = true;
+          }
+        },
+      };
+
+      class Obstacle {
+        constructor() {
+          this.x = canvas.width;
+          this.width = 12 + Math.random() * 10;
+          this.height = 24 + Math.random() * 16;
+        }
+        draw() {
+          ctx.fillStyle = gameColor;
+          ctx.fillRect(
+            this.x,
+            canvas.height - this.height,
+            this.width,
+            this.height,
+          );
+          ctx.fillRect(this.x - 4, canvas.height - this.height + 6, 4, 4);
+          ctx.fillRect(
+            this.x + this.width,
+            canvas.height - this.height + 10,
+            4,
+            4,
+          );
+        }
+        update() {
+          this.x -= speed;
+        }
+      }
+
+      function resetGame() {
+        isGameOver = false;
+        isStarted = true;
+        score = 0;
+        speed = 6;
+        obstacles = [];
+        dino.y = 0;
+        dino.vy = 0;
+      }
+
+      function checkCollision(rect1, rect2) {
+        return (
+          rect1.x < rect2.x + rect2.width &&
+          rect1.x + rect1.width > rect2.x &&
+          canvas.height - rect1.height - rect1.y <
+            canvas.height - rect2.height + rect2.height &&
+          canvas.height - rect1.y > canvas.height - rect2.height
+        );
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (isStarted && !isGameOver) {
+          nextObstacleTimer--;
+          if (nextObstacleTimer <= 0) {
+            obstacles.push(new Obstacle());
+            nextObstacleTimer = 70 + Math.random() * 90;
+          }
+
+          for (let i = obstacles.length - 1; i >= 0; i--) {
+            obstacles[i].update();
+            obstacles[i].draw();
+
+            if (checkCollision(dino, obstacles[i])) isGameOver = true;
+
+            if (obstacles[i].x + obstacles[i].width < 0) {
+              obstacles.splice(i, 1);
+              score++;
+              if (score % 6 === 0) speed += 0.4;
+            }
+          }
+          dino.update();
+        }
+
+        dino.draw();
+
+        // Отрисовка счета в фирменном стиле Chrome (нули перед числом)
+        ctx.fillStyle = gameColor;
+        ctx.font = '14px "Segoe UI", monospace';
+        ctx.fillText(String(score).padStart(5, "0"), canvas.width - 60, 25);
+
+        if (!isStarted) {
+          // Отрисовка текстовой подсказки прямо на холсте
+          ctx.font = '13px "Segoe UI", sans-serif';
+          ctx.fillText(
+            "Нажмите пробел, чтобы начать движение",
+            120,
+            canvas.height / 2,
+          );
+        }
+
+        if (isGameOver) {
+          ctx.font = "14px monospace";
+          ctx.fillText(
+            "G A M E  O V E R",
+            canvas.width / 2 - 55,
+            canvas.height / 2 - 10,
+          );
+          ctx.font = "11px sans-serif";
+          ctx.fillText(
+            "Нажмите пробел для перезапуска",
+            canvas.width / 2 - 85,
+            canvas.height / 2 + 15,
+          );
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "Space") {
+          e.preventDefault();
+          if (!isStarted || isGameOver) resetGame();
+          else dino.jump();
+        }
+      });
+
+      gameArea.addEventListener("click", () => {
+        if (!isStarted || isGameOver) resetGame();
+        else dino.jump();
+      });
+      loop();
+    </script>
+  </body>
+</html>

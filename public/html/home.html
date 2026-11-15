@@ -12,6 +12,10 @@
     <header>
       <div class="logo">CITY</div>
       <nav class="main-nav">
+        <a href="#news" class="nav-link" onclick="switchPage(event, 'news')"
+          >новости</a
+        >
+        <span>-</span>
         <a href="#info" class="nav-link" onclick="switchPage(event, 'info')"
           >инфо</a
         >
@@ -34,6 +38,15 @@
           onclick="switchPage(event, 'contacts')"
           >контакты</a
         >
+        <span>-</span>
+        <a
+          href="#sponsor"
+          class="nav-link"
+          onclick="switchPage(event, 'sponsor')"
+          >сервер</a
+        >
+        <span>-</span>
+        <a href="/html/index.html" class="nav-link">Настройки</a>
       </nav>
       <div class="dropdown-area">
         <div class="dropdown" id="servicesDropdown">
@@ -57,6 +70,27 @@
           высокую производительность для всех систем виртуального города.
           Выберите необходимый раздел в меню выше, чтобы начать работу.
         </p>
+      </section>
+      <section id="page-news" class="info-section" style="display: none">
+        <div id="future-game-banner" class="game-banner">
+          <div class="game-banner-info">
+            <h3>Запланирована игра</h3>
+            <p>Следующая игровая сессия в мегаполисе CITY уже назначена!</p>
+          </div>
+          <div class="game-datetime">
+            <div class="dt-pill" id="game-date-text">--.--.----</div>
+            <div class="dt-pill" id="game-time-text">--:--</div>
+          </div>
+        </div>
+
+        <!-- Заглушка, если новостей нет или ошибка -->
+        <div id="news-empty-msg" class="city-card" style="display: none">
+          <h2 id="news-msg-title">Загрузка...</h2>
+          <p id="news-msg-text">Ожидание ответа от сервера CITY.</p>
+        </div>
+
+        <!-- Список карточек новостей -->
+        <div id="news-list-container" class="cards-grid"></div>
       </section>
       <section id="page-bank" class="info-section" style="display: none">
         <h2>Городской Банк</h2>
@@ -102,6 +136,60 @@
           <a href="https://chat.google.com/room/AAQAygKGLtY?cls=7">Gmail</a>
         </p>
         <p>Почта — promanenko214@gmail.com</p>
+      </section>
+      <section id="page-sponsor" class="info-section" style="display: none">
+        <h2>Сервер</h2>
+        <p class="subtitle">Архитектура и ключевые зависимости проекта</p>
+
+        <div class="server-hero">
+          <img src="/icon/image.png" alt="CITY Server Core" />
+        </div>
+
+        <div class="dependencies-label">Используемые модули</div>
+
+        <div class="dependencies-grid">
+          <a
+            href="https://github.com/RPM-programmer/chalk-palette"
+            target="_blank"
+            class="dep-card"
+          >
+            <div class="dep-icon">
+              <img
+                src="https://github.com/RPM-programmer/chalk-palette/blob/main/src/logo.png?raw=true"
+                alt="chalk-palette"
+              />
+            </div>
+            <span>chalk-palette</span>
+          </a>
+
+          <a
+            href="https://github.com/RPM-programmer/med-cms"
+            target="_blank"
+            class="dep-card"
+          >
+            <div class="dep-icon">
+              <img
+                src="https://github.com/RPM-programmer/med-cms/blob/main/public/icon/icon.png?raw=true"
+                alt="med-cms"
+              />
+            </div>
+            <span>med-cms</span>
+          </a>
+
+          <a
+            href="https://github.com/RPM-programmer/sequelize-game-bank"
+            target="_blank"
+            class="dep-card"
+          >
+            <div class="dep-icon">
+              <img
+                src="https://github.com/RPM-programmer/sequelize-game-bank/blob/main/src/logo/icon.png?raw=true"
+                alt="sequelize-game-bank"
+              />
+            </div>
+            <span>sequelize-game-bank</span>
+          </a>
+        </div>
       </section>
     </main>
     <div class="road-track" id="road"></div>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/redact.css" />
+    <script src="/js/news.js" defer></script>
+    <title>Настройка игры</title>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      "
+    >
+      <a href="/html/index.html" class="back-link card-form">← На главную</a>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+        "
+      >
+        <form class="card-form" action="/game/set" method="post">
+          <h2>Настройка времени игры</h2>
+
+          <div class="form-group">
+            <label for="game-date">Дата проведения</label>
+            <input type="date" name="date" id="game-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="game-time">Время начала</label>
+            <input type="time" name="time" id="game-time" required />
+          </div>
+
+          <input type="submit" value="Сохранить расписание" />
+          <p class="form-status"></p>
+        </form>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+          "
+        >
+          <div class="card-form-s" id="menu">
+            <h2>Настройки игры</h2>
+            <input type="submit" value="Убрать информацию о игре" id="delete" />
+            <p class="form-status" id="delete-status"></p>
+            <input
+              type="submit"
+              value="Не показывать информацию о игре"
+              id="off"
+            />
+            <p class="form-status" id="off-status"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

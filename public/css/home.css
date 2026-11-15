@@ -19,44 +19,43 @@ html {
   overflow-x: hidden;
 }
 
-/* ЖИВАЯ АНИМАЦИЯ ПЛАВНОГО ФОНА СЕРВЕРА */
+/* ОПТИМИЗИРОВАННЫЙ ФОН СЕРВЕРА (БЕЗ ТЯЖЕЛОГО FILTER: BLUR) */
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  inset: -20%;
   z-index: -1;
   background:
     radial-gradient(
-      circle at 15% 25%,
-      rgba(0, 100, 255, 0.12) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(0, 200, 100, 0.1) 0%,
+      circle at 20% 30%,
+      rgba(0, 100, 255, 0.16) 0%,
       transparent 45%
     ),
     radial-gradient(
-      circle at 75% 85%,
-      rgba(230, 30, 10, 0.06) 0%,
-      transparent 45%
+      circle at 80% 20%,
+      rgba(0, 200, 100, 0.14) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 75% 80%,
+      rgba(230, 30, 10, 0.09) 0%,
+      transparent 40%
     ),
     radial-gradient(
       circle at 25% 75%,
-      rgba(240, 245, 255, 0.04) 0%,
+      rgba(240, 245, 255, 0.06) 0%,
       transparent 35%
     );
-  background-size: 140% 140%;
-  filter: blur(70px);
-  animation: serverGlow 20s ease infinite alternate;
+  will-change: transform;
+  animation: serverGlow 20s ease-in-out infinite alternate;
 }
 
 @keyframes serverGlow {
   0% {
-    background-position: 0% 0%;
+    transform: translate3d(-3%, -3%, 0) scale(1);
   }
   100% {
-    background-position: 100% 100%;
+    transform: translate3d(3%, 3%, 0) scale(1.05);
   }
 }
 
@@ -70,7 +69,7 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  z-index: 10;
+  z-index: 999;
 }
 
 .logo {
@@ -82,9 +81,9 @@ header {
 }
 
 .main-nav {
-  background: rgba(17, 24, 39, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 10px 25px;
   border-radius: 50px;
@@ -168,8 +167,6 @@ header {
 
 .dropdown-inner {
   background: rgba(17, 24, 39, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   min-width: 160px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -204,10 +201,10 @@ main {
 }
 
 .info-section {
-  background: rgba(17, 24, 39, 0.3);
+  background: rgba(17, 24, 39, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   padding: 40px;
   border-radius: 16px;
   max-width: 600px;
@@ -232,7 +229,7 @@ footer {
   z-index: 10;
 }
 
-/* СТИЛИ ДОРОГИ И ГОРОДСКИХ МАШИНОК */
+/* СТИЛИ ДОРОГИ И ГОРОДСКИХ МАШИНОК (С GPU-УСКОРЕНИЕМ) */
 .road-track {
   position: fixed;
   bottom: 60px;
@@ -241,10 +238,13 @@ footer {
   height: 16px;
   background: rgba(255, 255, 255, 0.01);
   z-index: 5;
+  pointer-events: none;
+  contain: layout style;
 }
 
 .traffic-car {
   position: absolute;
+  left: 0;
   width: 45px;
   height: 12px;
   background: #1e293b;
@@ -252,7 +252,10 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.45);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(-90px, 0, 0);
 }
 
 .traffic-car::before {
@@ -266,7 +269,7 @@ footer {
   border-radius: 50%;
   box-shadow:
     0 0 8px #fff,
-    5px 0 15px rgba(255, 255, 255, 0.6);
+    4px 0 12px rgba(255, 255, 255, 0.5);
 }
 .traffic-car::after {
   content: "";
@@ -277,7 +280,7 @@ footer {
   height: 6px;
   background: #ff3333;
   border-radius: 1px;
-  box-shadow: 0 0 6px #ff3333;
+  box-shadow: 0 0 5px #ff3333;
 }
 
 .siren {
@@ -296,15 +299,11 @@ footer {
 @keyframes policeFlash {
   0% {
     background: #0044ff;
-    box-shadow:
-      0 0 15px #0044ff,
-      -8px 0 20px #0044ff;
+    box-shadow: 0 0 12px #0044ff;
   }
   100% {
     background: #ff0000;
-    box-shadow:
-      0 0 15px #ff0000,
-      8px 0 20px #ff0000;
+    box-shadow: 0 0 12px #ff0000;
   }
 }
 
@@ -314,7 +313,7 @@ footer {
 @keyframes medicalFlash {
   0% {
     background: #00d9ff;
-    box-shadow: 0 0 20px #00d9ff;
+    box-shadow: 0 0 14px #00d9ff;
   }
   100% {
     background: transparent;
@@ -333,7 +332,7 @@ footer {
 @keyframes fireFlash {
   0% {
     background: #ff0000;
-    box-shadow: 0 0 20px #ff0000;
+    box-shadow: 0 0 14px #ff0000;
   }
   100% {
     background: transparent;
@@ -347,7 +346,7 @@ footer {
 .car-taxi::before {
   box-shadow:
     0 0 8px #fff,
-    5px 0 15px rgba(255, 183, 3, 0.5);
+    4px 0 12px rgba(255, 183, 3, 0.5);
 }
 .car-taxi .siren {
   display: none;
@@ -372,7 +371,7 @@ footer {
 .car-minibus::before {
   box-shadow:
     0 0 8px #fff,
-    5px 0 15px rgba(255, 230, 150, 0.5);
+    4px 0 12px rgba(255, 230, 150, 0.5);
 }
 .car-minibus .siren {
   display: none;
@@ -384,7 +383,7 @@ footer {
 @keyframes serviceFlash {
   0% {
     background: #ffaa00;
-    box-shadow: 0 0 18px #ffaa00;
+    box-shadow: 0 0 12px #ffaa00;
   }
   100% {
     background: #331100;
@@ -434,16 +433,38 @@ footer {
   animation: crossScreen 4.5s linear forwards;
 }
 
+/* ПЛАВНОЕ ДВИЖЕНИЕ ЧЕРЕЗ GPU ВМЕСТО LEFT */
 @keyframes crossScreen {
   0% {
-    left: -80px;
+    transform: translate3d(-90px, 0, 0);
   }
   100% {
-    left: calc(100% + 80px);
+    transform: translate3d(calc(100vw + 90px), 0, 0);
   }
 }
 
-/* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
+/* =========================================================
+   ПРИНУДИТЕЛЬНОЕ ОТКЛЮЧЕНИЕ АНИМАЦИЙ (СРАБАТЫВАЕТ ОТ JS)
+   ========================================================= */
+body.no-animations::before {
+  animation: none !important;
+  transform: none !important;
+}
+
+body.no-animations .road-track {
+  display: none !important;
+}
+
+body.no-animations *,
+body.no-animations *::before,
+body.no-animations *::after {
+  animation: none !important;
+  transition: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ И ПЛАНШЕТОВ */
 @media (max-width: 768px) {
   header {
     flex-wrap: wrap;
@@ -461,7 +482,9 @@ footer {
     order: 3;
     width: 100%;
     justify-content: center;
-    background: rgba(17, 24, 39, 0.4);
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     padding: 12px 15px;
     gap: 12px;
     border-radius: 12px;
@@ -476,4 +499,181 @@ footer {
   .road-track {
     bottom: 55px;
   }
+}
+/* =========================================================
+   СТИЛИ ВКЛАДКИ СЕРВЕРА И ЗАВИСИМОСТЕЙ (#page-sponsor)
+   ========================================================= */
+#page-sponsor {
+  max-width: 640px;
+  width: 100%;
+}
+
+#page-sponsor .subtitle {
+  margin-bottom: 24px;
+  font-size: 1rem;
+  color: #94a3b8;
+}
+
+/* Главное лого сервера */
+.server-hero {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 28px;
+}
+
+.server-hero img {
+  width: 100%;
+  max-width: 240px; /* Вместо громоздких 500px */
+  height: auto;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease;
+}
+
+.server-hero img:hover {
+  transform: scale(1.03);
+}
+
+/* Разделитель */
+.dependencies-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+/* Сетка модулей */
+.dependencies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* Карточка зависимости */
+.dep-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.dep-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(0, 100, 255, 0.4);
+  color: #ffffff;
+}
+
+/* Контейнер для иконки — скругляет углы и скрывает резкий фон картинок */
+.dep-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.dep-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Адаптация для мобильных экранов */
+@media (max-width: 600px) {
+  .dependencies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dep-card {
+    flex-direction: row;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  .dep-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+}
+.game-banner {
+  display: none;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.18),
+    rgba(139, 92, 246, 0.18)
+  );
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.game-banner-info h3 {
+  font-size: 18px;
+  color: #93c5fd;
+  margin-bottom: 4px;
+}
+
+.game-banner-info p {
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.game-datetime {
+  display: flex;
+  gap: 10px;
+}
+.city-card {
+  background: #161b22;
+  border: 1px solid #262c36;
+  border-radius: 14px;
+  padding: 22px;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+
+.city-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+}
+
+.city-card h2 {
+  font-size: 19px;
+  color: #60a5fa;
+  margin-bottom: 10px;
+}
+
+.city-card p {
+  color: #cbd5e1;
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 10px;
 }

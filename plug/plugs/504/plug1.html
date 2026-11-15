@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ошибка 504 | Время ожидания истекло</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #1c1917;
+        color: #f5f5f4;
+      }
+      .card {
+        text-align: center;
+        max-width: 480px;
+        background: #292524;
+        padding: 40px;
+        border-radius: 12px;
+        border: 1px solid #44403c;
+      }
+      .timer {
+        font-size: 60px;
+        margin-bottom: 20px;
+        animation: flip 3s infinite ease-in-out;
+        display: inline-block;
+      }
+      h1 {
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #a8a29e;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      @keyframes flip {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(-1, 1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="timer">⏳</div>
+      <h1>Превышено время ожидания</h1>
+      <p>
+        Главный сервер приложения обрабатывал ваш запрос слишком долго, и
+        промежуточный шлюз закрыл соединение по таймауту. Попробуйте обновить
+        страницу.
+      </p>
+    </div>
+  </body>
+</html>

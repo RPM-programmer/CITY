@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обслуживание инфраструктуры</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        background: #030712;
+        color: #f9fafb;
+      }
+      .box {
+        text-align: center;
+        max-width: 480px;
+        background: #0f172a;
+        padding: 40px;
+        border-radius: 24px;
+        border: 1px solid #1e293b;
+      }
+      .pulse-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        padding: 6px 14px;
+        border-radius: 100px;
+        color: #3b82f6;
+        font-size: 13px;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        background: #3b82f6;
+        border-radius: 50%;
+        animation: blink 1.5s infinite;
+      }
+      h1 {
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #94a3b8;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="pulse-badge">
+        <div class="dot"></div>
+        Maintenance Mode
+      </div>
+      <h1>Обновление сервиса</h1>
+      <p>
+        Платформа временно переведена в режим обслуживания для развертывания
+        новой версии ПО. Доступ к сайту восстановится автоматически.
+      </p>
+    </div>
+  </body>
+</html>

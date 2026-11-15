@@ -2,3 +2,5 @@
 # Added by ggshield
 .cache_ggshield
 .env
+node_modules/
+logs/

@@ -15,13 +15,13 @@ const server = require("./server/server");
 const bcrypt = require("bcrypt");
 
 async function init(app) {
-  await chalk.animation.textShimmer("MED-CMS");
-  console.log(logger.ServerMedInfo("Запуск сервера..."));
-  await chalk.animation.retroLines({
-    duration: 4000,
-    linesCount: 4,
-    offset: 3,
+  await chalk.PlayLogo3D(path.join(__dirname, "public", "icon", "icon.png"), {
+    duration: 3000,
+    explodeOnEnd: false,
+    explodeOnStart: false,
+    force3D: true,
   });
+  console.log(logger.ServerMedInfo("Запуск сервера..."));
 
   if (app && typeof app === "function" && typeof app.handle === "function") {
     console.log(logger.ServerMedInfo("Проверка на app пройдена успешно!"));
